@@ -515,7 +515,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7ws-eB-62U">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7ws-eB-62U">
+                                <frame key="frameInset" width="1000" height="1000"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -562,7 +563,6 @@
                             <constraint firstItem="xUG-Ye-Yul" firstAttribute="top" secondItem="RI3-Ab-7kB" secondAttribute="bottom" constant="29" id="FEF-GA-F9h"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7ws-eB-62U" secondAttribute="trailing" constant="60" id="Ibv-hR-zkq"/>
                             <constraint firstItem="L0Y-nF-cb0" firstAttribute="centerX" secondItem="9Td-kh-AOq" secondAttribute="centerX" id="OM8-Cs-5ZK"/>
-                            <constraint firstItem="RI3-Ab-7kB" firstAttribute="centerX" secondItem="9Td-kh-AOq" secondAttribute="centerX" id="Tgt-SW-WST"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RI3-Ab-7kB" secondAttribute="trailing" constant="32" id="YXb-d6-PUY"/>
                             <constraint firstItem="RI3-Ab-7kB" firstAttribute="top" secondItem="7ws-eB-62U" secondAttribute="bottom" constant="71" id="aqc-xD-PuJ"/>
                             <constraint firstItem="xUG-Ye-Yul" firstAttribute="leading" secondItem="9Td-kh-AOq" secondAttribute="leadingMargin" constant="31" id="baO-wx-El7"/>
