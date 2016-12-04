@@ -71,6 +71,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         })
         task.resume()*/
+        
+        self.hideKeyboardWhenTappedAround() 
     }
 
     override func didReceiveMemoryWarning() {
@@ -159,4 +161,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
  post: https://icons8.com/web-app/7989/currency#filled
  settings: https://icons8.com/web-app/14099/settings
 */
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

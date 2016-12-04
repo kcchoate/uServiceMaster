@@ -289,7 +289,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v6a-c4-FiR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4916" y="-978"/>
+            <point key="canvasLocation" x="4860" y="-624"/>
         </scene>
         <!--New Job-->
         <scene sceneID="2NS-dR-AAZ">
@@ -681,7 +681,7 @@
         <!--Jobs I've Applied For-->
         <scene sceneID="cNg-0J-k6r">
             <objects>
-                <tableViewController title="Jobs I've Applied For" id="WcT-lD-5Gu" customClass="MainScreenViewController" customModule="uService" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Jobs I've Applied For" id="WcT-lD-5Gu" customClass="MyApplicationsTableViewController" customModule="uService" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aDx-ib-qaZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -891,6 +891,6 @@
         <image name="Search Property-30.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jB5-8v-PV5"/>
+        <segue reference="Wud-Yx-Xzi"/>
     </inferredMetricsTieBreakers>
 </document>

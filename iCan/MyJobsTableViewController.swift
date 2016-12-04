@@ -27,14 +27,13 @@ class Job {
     }
 }
 class MyJobsTableViewController: UITableViewController {
-    let dateFormatter = DateFormatter()
     var listOfJobs: [Job] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         let job1 = Job(newJID: "ABC", newTitle: "Test 1", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
         let job2 = Job(newJID: "ABC", newTitle: "Test 2", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job3 = Job(newJID: "ABC", newTitle: "Test 2", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job4 = Job(newJID: "ABC", newTitle: "Test 2", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
+        let job3 = Job(newJID: "ABC", newTitle: "Test 3", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
+        let job4 = Job(newJID: "ABC", newTitle: "Test 4", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
         listOfJobs.append(job1)
         listOfJobs.append(job2)
         listOfJobs.append(job3)
@@ -110,7 +109,7 @@ class MyJobsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        cell.textLabel?.text = listOfJobs[indexPath.row].title
+        cell.textLabel?.text = "\(listOfJobs[indexPath.row].title) - $\(listOfJobs[indexPath.row].pay)"
 
         return cell
     }
