@@ -21,10 +21,12 @@ class user {
     }
 }
 class UserViewController: UIViewController {
-
+    var loggedInUser: LoggedInUser? = nil
     @IBOutlet weak var userImageOutlet: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print (loggedInUser!.UID!)
         //self.navigationController?.navigationBar.isHidden = true
     }
 

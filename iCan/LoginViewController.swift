@@ -6,7 +6,7 @@
 import UIKit
 
 class LoggedInUser {
-    var UID: String? = nil
+    var UID: String? = "Test"
 }
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
@@ -14,7 +14,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextLabel: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     let amazonKey: String = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/"
-    var loggedInUser: LoggedInUser? = nil
+    var loggedInUser = LoggedInUser()
     
     
     override func viewDidLoad() {
@@ -75,7 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             //return true
         //if F:
             //return false
-        return false
+        return true
     }
     
     //a utility function for presenting an error notification to the user
@@ -121,6 +121,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "LoginSuccess" {
             let destinationVC = segue.destination as! TabBarController
             destinationVC.loggedInUser = self.loggedInUser
+            let firstNavController = destinationVC.viewControllers?[0] as! LoggedInNavigationController
+            let userViewController = firstNavController.viewControllers[0] as! UserViewController
+            userViewController.loggedInUser = self.loggedInUser
+            
+            
+            
         }
     }
 /* 
