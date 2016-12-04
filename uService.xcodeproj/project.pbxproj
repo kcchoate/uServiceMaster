@@ -12,6 +12,7 @@
 		0D9DF6531DB837170010FCD3 /* MainScreenNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF6521DB837170010FCD3 /* MainScreenNavigationController.swift */; };
 		0D9DF6551DB838EE0010FCD3 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */; };
 		0DA517891DF49D29004591FC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA517881DF49D29004591FC /* TabBarController.swift */; };
+		0DA5178D1DF4A4DF004591FC /* LoggedInNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */; };
 		0DABCC301DB5E1B4003B333D /* CurrencyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DABCC2E1DB5E1B4003B333D /* CurrencyField.swift */; };
 		0DABCC311DB5E1B4003B333D /* NewJobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */; };
 		0DD272631DCBA2B2001AC3A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DD272621DCBA2B2001AC3A0 /* MapKit.framework */; };
@@ -38,6 +39,7 @@
 		0D9DF6521DB837170010FCD3 /* MainScreenNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenNavigationController.swift; sourceTree = "<group>"; };
 		0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		0DA517881DF49D29004591FC /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedInNavigationController.swift; sourceTree = "<group>"; };
 		0DABCC2E1DB5E1B4003B333D /* CurrencyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyField.swift; sourceTree = "<group>"; };
 		0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewJobViewController.swift; sourceTree = "<group>"; };
 		0DD272621DCBA2B2001AC3A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -111,6 +113,7 @@
 				0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */,
 				0DE0159C1D9B4700001C3EFF /* AppDelegate.swift */,
 				0DE015A01D9B4700001C3EFF /* Main.storyboard */,
+				0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */,
 				0DA517881DF49D29004591FC /* TabBarController.swift */,
 				2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */,
 				0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */,
@@ -214,6 +217,7 @@
 				2F99BCB21DE5FB43009B0C05 /* CreateAccountViewController.swift in Sources */,
 				0D9DF6511DB82F320010FCD3 /* LoginViewController.swift in Sources */,
 				0DE0159D1D9B4700001C3EFF /* AppDelegate.swift in Sources */,
+				0DA5178D1DF4A4DF004591FC /* LoggedInNavigationController.swift in Sources */,
 				2F99BCAE1DE5EB2B009B0C05 /* JobApplicationViewController.swift in Sources */,
 				0DE015B31D9B8276001C3EFF /* SelectedJobViewController.swift in Sources */,
 				0DABCC311DB5E1B4003B333D /* NewJobViewController.swift in Sources */,
