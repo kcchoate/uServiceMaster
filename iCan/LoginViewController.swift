@@ -36,6 +36,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextLabel: UITextField!
     @IBOutlet weak var passwordTextLabel: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
+    
     let amazonKey: String = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/"
     var loggedInUser = LoggedInUser()
     
@@ -45,33 +47,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.isEnabled = false
         usernameTextLabel.delegate = self
         passwordTextLabel.delegate = self
-        /*let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs")!
-        let urlRequest: URLRequest = URLRequest(url: requestURL)
-        let session = URLSession.shared
-        let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-            //do stuff with response, data, and error here
-            guard error == nil else {
-                print ("error calling GET")
-                print (error)
-                return
-            }
-            guard let responseData = data else {
-                print ("Error: did not receive data")
-                return
-            }
-            do {
-                let json = try JSONSerialization.jsonObject(with: responseData, options: []) as! NSDictionary
-                print (json)
-                print ("done")
-            }
-            catch {
-                print ("Error trying to convert data to json")
-                return
-            }
-            
-        })
-        task.resume()*/
         
+        //toolbar setup for login page
+        let usernameCloseToolBar = UIToolbar()
+        usernameCloseToolBar.barStyle = .default
+        usernameCloseToolBar.isTranslucent = true
+        usernameCloseToolBar.tintColor = colorDarkGreen
+        usernameCloseToolBar.sizeToFit()
+        let usernameDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(usernameOKClicked))
+        let usernameSpaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let usernameCancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(usernameCancelClicked))
+        usernameCloseToolBar.setItems([usernameCancelButton, usernameSpaceButton, usernameDoneButton], animated: false)
+        usernameCloseToolBar.isUserInteractionEnabled = true
+        usernameTextLabel.inputAccessoryView = usernameCloseToolBar
+        
+        let passwordCloseToolBar = UIToolbar()
+        passwordCloseToolBar.barStyle = .default
+        passwordCloseToolBar.isTranslucent = true
+        passwordCloseToolBar.tintColor = colorDarkGreen
+        passwordCloseToolBar.sizeToFit()
+        let passwordDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(passwordOKClicked))
+        let passwordSpaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let passwordCancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(passwordCancelClicked))
+        passwordCloseToolBar.setItems([passwordCancelButton, passwordSpaceButton, passwordDoneButton], animated: false)
+        passwordCloseToolBar.isUserInteractionEnabled = true
+        passwordTextLabel.inputAccessoryView = passwordCloseToolBar
+
         self.hideKeyboardWhenTappedAround() 
     }
 
@@ -79,6 +80,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
 
+    func usernameOKClicked() {
+        usernameTextLabel.resignFirstResponder()
+        passwordTextLabel.becomeFirstResponder()
+    }
+    func usernameCancelClicked() {
+        usernameTextLabel.text = ""
+        usernameTextLabel.resignFirstResponder()
+    }
+    func passwordOKClicked() {
+        passwordTextLabel.resignFirstResponder()
+    }
+    func passwordCancelClicked() {
+        passwordTextLabel.text = ""
+        passwordTextLabel.resignFirstResponder()
+    }
+    
     @IBAction func LoginPressed() {
         if (usernameTextLabel.text == nil || passwordTextLabel.text == nil || usernameTextLabel.text == "" || passwordTextLabel.text == "") {
             presentErrorNotification(errorTitle: "Invalid Login", errorMessage: "Username or password left blank.")
@@ -92,6 +109,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func testLogin(userName: String, password: String) -> Bool{
+        /*let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs")!
+         let urlRequest: URLRequest = URLRequest(url: requestURL)
+         let session = URLSession.shared
+         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+         //do stuff with response, data, and error here
+         guard error == nil else {
+         print ("error calling GET")
+         print (error)
+         return
+         }
+         guard let responseData = data else {
+         print ("Error: did not receive data")
+         return
+         }
+         do {
+         let json = try JSONSerialization.jsonObject(with: responseData, options: []) as! NSDictionary
+         print (json)
+         print ("done")
+         }
+         catch {
+         print ("Error trying to convert data to json")
+         return
+         }
+         
+         })
+         task.resume()*/
         //send username+password to server
         //retrieve data
         //check for response T or F
