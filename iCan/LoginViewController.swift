@@ -9,6 +9,34 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs")!
+        let urlRequest: URLRequest = URLRequest(url: requestURL)
+        let session = URLSession.shared
+        let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+            //do stuff with response, data, and error here
+            guard error == nil else {
+                print ("error calling GET")
+                print (error)
+                return
+            }
+            guard let responseData = data else {
+                print ("Error: did not receive data")
+                return
+            }
+            do {
+                let json = try JSONSerialization.jsonObject(with: responseData, options: []) as! NSDictionary
+                print (json)
+                print ("done")
+            }
+            catch {
+                print ("Error trying to convert data to json")
+                return
+            }
+            
+        })
+        task.resume()
+        
     }
 
     override func didReceiveMemoryWarning() {
