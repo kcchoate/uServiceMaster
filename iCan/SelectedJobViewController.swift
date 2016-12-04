@@ -19,7 +19,7 @@ class SelectedJobViewController: UIViewController {
     var dateText: String = ""
     
     
-    
+    //suck it kendrick
     override func viewDidLoad() {
         super.viewDidLoad()
         //we create a number formatter to format the received price into a currency style. This prevents prices like $45.50 from appearing as $45.5

@@ -157,7 +157,7 @@
 				TargetAttributes = {
 					0DE015981D9B4700001C3EFF = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = ME4P9355H2;
+						DevelopmentTeam = LTR6RH767P;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -338,10 +338,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ME4P9355H2;
+				DEVELOPMENT_TEAM = LTR6RH767P;
 				INFOPLIST_FILE = iCan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Real-Big-Labs.iCan";
+				PRODUCT_BUNDLE_IDENTIFIER = "Real-Big-Labs.uService";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -352,10 +352,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = ME4P9355H2;
+				DEVELOPMENT_TEAM = LTR6RH767P;
 				INFOPLIST_FILE = iCan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Real-Big-Labs.iCan";
+				PRODUCT_BUNDLE_IDENTIFIER = "Real-Big-Labs.uService";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
