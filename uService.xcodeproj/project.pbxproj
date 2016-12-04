@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0D3FFA481DB96F090021A722 /* Ronald Reagan.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 0D3FFA471DB96F090021A722 /* Ronald Reagan.jpeg */; };
 		0D9DF6511DB82F320010FCD3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF6501DB82F320010FCD3 /* LoginViewController.swift */; };
-		0D9DF6531DB837170010FCD3 /* MainScreenNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF6521DB837170010FCD3 /* MainScreenNavigationController.swift */; };
 		0D9DF6551DB838EE0010FCD3 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */; };
 		0DA517891DF49D29004591FC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA517881DF49D29004591FC /* TabBarController.swift */; };
 		0DA5178D1DF4A4DF004591FC /* LoggedInNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */; };
@@ -36,7 +35,6 @@
 /* Begin PBXFileReference section */
 		0D3FFA471DB96F090021A722 /* Ronald Reagan.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Ronald Reagan.jpeg"; path = "Assets.xcassets/Ronald Reagan.jpeg"; sourceTree = "<group>"; };
 		0D9DF6501DB82F320010FCD3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		0D9DF6521DB837170010FCD3 /* MainScreenNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenNavigationController.swift; sourceTree = "<group>"; };
 		0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		0DA517881DF49D29004591FC /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedInNavigationController.swift; sourceTree = "<group>"; };
@@ -102,30 +100,29 @@
 		0DE0159B1D9B4700001C3EFF /* uService */ = {
 			isa = PBXGroup;
 			children = (
+				0DE0159C1D9B4700001C3EFF /* AppDelegate.swift */,
+				2F99BCB11DE5FB43009B0C05 /* CreateAccountViewController.swift */,
+				0DABCC2E1DB5E1B4003B333D /* CurrencyField.swift */,
+				2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */,
+				0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */,
+				0D9DF6501DB82F320010FCD3 /* LoginViewController.swift */,
+				0DE015AE1D9B475F001C3EFF /* MainScreenViewController.swift */,
+				0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */,
+				0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */,
+				0DE015B21D9B8276001C3EFF /* SelectedJobViewController.swift */,
+				0DA517881DF49D29004591FC /* TabBarController.swift */,
+				0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */,
+				0DE015A01D9B4700001C3EFF /* Main.storyboard */,
+				0DE015A51D9B4700001C3EFF /* LaunchScreen.storyboard */,
+				0DE015A81D9B4700001C3EFF /* Info.plist */,
+				0DE015A31D9B4700001C3EFF /* Assets.xcassets */,
 				0DDB3D511DCBEB2100247EA9 /* Currency Filled-30.png */,
 				0DDB3D521DCBEB2100247EA9 /* Grey_icon.png */,
 				0DDB3D531DCBEB2100247EA9 /* Home-30.png */,
+				0D3FFA471DB96F090021A722 /* Ronald Reagan.jpeg */,
 				0DDB3D541DCBEB2100247EA9 /* Search Property-30.png */,
 				0DDB3D551DCBEB2100247EA9 /* Settings-30.png */,
 				0DDB3D561DCBEB2100247EA9 /* Yellow_icon.svg.png */,
-				2F99BCB11DE5FB43009B0C05 /* CreateAccountViewController.swift */,
-				0DABCC2E1DB5E1B4003B333D /* CurrencyField.swift */,
-				0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */,
-				0DE0159C1D9B4700001C3EFF /* AppDelegate.swift */,
-				0DE015A01D9B4700001C3EFF /* Main.storyboard */,
-				0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */,
-				0DA517881DF49D29004591FC /* TabBarController.swift */,
-				2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */,
-				0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */,
-				0D9DF6521DB837170010FCD3 /* MainScreenNavigationController.swift */,
-				0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */,
-				0D9DF6501DB82F320010FCD3 /* LoginViewController.swift */,
-				0DE015B21D9B8276001C3EFF /* SelectedJobViewController.swift */,
-				0DE015AE1D9B475F001C3EFF /* MainScreenViewController.swift */,
-				0DE015A31D9B4700001C3EFF /* Assets.xcassets */,
-				0D3FFA471DB96F090021A722 /* Ronald Reagan.jpeg */,
-				0DE015A51D9B4700001C3EFF /* LaunchScreen.storyboard */,
-				0DE015A81D9B4700001C3EFF /* Info.plist */,
 			);
 			name = uService;
 			path = iCan;
@@ -211,7 +208,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D9DF6531DB837170010FCD3 /* MainScreenNavigationController.swift in Sources */,
 				0DD272651DCBA2C4001AC3A0 /* SearchScreenViewController.swift in Sources */,
 				0D9DF6551DB838EE0010FCD3 /* UserViewController.swift in Sources */,
 				2F99BCB21DE5FB43009B0C05 /* CreateAccountViewController.swift in Sources */,

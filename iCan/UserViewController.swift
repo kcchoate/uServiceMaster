@@ -22,11 +22,15 @@ class user {
 }
 class UserViewController: UIViewController {
     var loggedInUser: LoggedInUser? = nil
-    @IBOutlet weak var userImageOutlet: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print (loggedInUser!.UID!)
+        nameLabel.text = "\((loggedInUser?.firstName)!) \((loggedInUser?.lastName)!)"
+        emailLabel.text = (loggedInUser?.email)!
+        locationLabel.text = "\((loggedInUser?.city)!), \((loggedInUser?.state)!), \((loggedInUser?.zip)!)"
         //self.navigationController?.navigationBar.isHidden = true
     }
 

@@ -6,7 +6,30 @@
 import UIKit
 
 class LoggedInUser {
-    var UID: String? = "Test"
+    var uid: String? = "Test"
+    var firstName: String? = "First"
+    var lastName: String? = "Last"
+    var email: String? = "example@example.com"
+    var lat: Float? = 10.1
+    var long: Float? = 10.1
+    var city: String? = "Houston"
+    var state: String? = "Texas"
+    var zip: String? = "77330"
+    
+    init(UID: String, FirstName: String, LastName: String, Email: String, Lat: Float, Long: Float, City: String, State: String, Zip: String) {
+        uid = UID
+        firstName = FirstName
+        lastName = LastName
+        email = Email
+        lat = Lat
+        long = Long
+        city = City
+        state = State
+        zip = Zip
+    }
+    init() {
+        //default constructor used for testing
+    }
 }
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
