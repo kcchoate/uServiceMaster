@@ -60,6 +60,10 @@ class PostedJobsTableViewController: UITableViewController {
             let destinationVC = segue.destination as! JobApplicationViewController
             destinationVC.selectedJob = listOfJobs[selectedCell]
             destinationVC.title = listOfJobs[selectedCell].title
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
         }
     }
 }
