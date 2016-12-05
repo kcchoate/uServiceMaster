@@ -54,7 +54,6 @@ class SearchScreenViewController: UIViewController, MKMapViewDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailsDisclosurePressed" {
-            let applicantVC = segue.destination as! JobApplicationViewController
             let backitem = UIBarButtonItem()
             backitem.title = "Back"
             navigationItem.backBarButtonItem = backitem
