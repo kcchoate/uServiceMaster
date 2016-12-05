@@ -85,10 +85,22 @@ class MyJobsTableViewController: UITableViewController {
             */
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        self.editButtonItem.title = "Delete"
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    //sets the delete button to show done while editing is in progress and go back to delete when finished editing.
+    override func setEditing (_ editing:Bool, animated:Bool)
+    {
+        super.setEditing(editing,animated:animated)
+        if (self.isEditing) {
+            self.editButtonItem.title = "Done"
+        }
+        else {
+            self.editButtonItem.title = "Delete"
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
