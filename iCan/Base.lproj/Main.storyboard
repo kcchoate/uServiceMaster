@@ -63,7 +63,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zKJ-k2-7oz" id="O0V-B4-5Ch">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                    <frame key="frameInset" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.58823529409999997" green="0.87843137250000003" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -77,7 +77,7 @@
                             <outlet property="delegate" destination="QWE-zQ-IE3" id="yPv-bi-rUV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="woA-L8-KsH"/>
+                    <navigationItem key="navigationItem" title="Jobs in Your Area" id="woA-L8-KsH"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dch-MB-ode" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -509,7 +509,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="BvQ-Hc-Oe4"/>
+                    <navigationItem key="navigationItem" title="New Job" id="BvQ-Hc-Oe4"/>
                     <connections>
                         <outlet property="bottomAddJobButton" destination="PZE-XC-wHn" id="3tb-7d-1PK"/>
                         <outlet property="jobCategoryTextField" destination="GRQ-fU-CPQ" id="ga7-7R-b3L"/>
@@ -636,7 +636,7 @@
             </objects>
             <point key="canvasLocation" x="1143.2" y="81.409295352323838"/>
         </scene>
-        <!--User View Controller-->
+        <!--User Account-->
         <scene sceneID="GlF-Z3-laf">
             <objects>
                 <viewController id="qEQ-yA-Anj" customClass="UserViewController" customModule="uService" customModuleProvider="target" sceneMemberID="viewController">
@@ -704,7 +704,7 @@
                             <constraint firstItem="VFz-Cc-X0c" firstAttribute="leading" secondItem="IaH-vn-e68" secondAttribute="leadingMargin" constant="32" id="xX2-cR-TKZ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="qw3-vJ-plf"/>
+                    <navigationItem key="navigationItem" title="User Account" id="qw3-vJ-plf"/>
                     <connections>
                         <outlet property="emailLabel" destination="JB9-lR-fl8" id="mke-SO-xky"/>
                         <outlet property="locationLabel" destination="UPK-gR-LEK" id="rNa-S1-lcQ"/>
