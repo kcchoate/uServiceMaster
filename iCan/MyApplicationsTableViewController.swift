@@ -11,7 +11,10 @@ import UIKit
 class MyApplicationsTableViewController: UITableViewController {
     var selectedCell: Int = 0
     var listOfJobs: [Job] = []
+    let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     override func viewDidLoad() {
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.separatorColor = colorDarkGreen
         super.viewDidLoad()
         let job1 = Job(newJID: "ABC", newTitle: "Test 1", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
         let job2 = Job(newJID: "ABC", newTitle: "Test 2", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)

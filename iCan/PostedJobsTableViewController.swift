@@ -11,8 +11,11 @@ import UIKit
 class PostedJobsTableViewController: UITableViewController {
     var listOfJobs: [Job] = []
     var selectedCell: Int = 0
+    let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.separatorColor = colorDarkGreen
         let job1 = Job(newJID: "ABC", newTitle: "Test 1", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description 1", newDueDate: 1479423103, newDate: 1479423103)
         let job2 = Job(newJID: "ABC", newTitle: "Test 2", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description 2", newDueDate: 1479423103, newDate: 1479423103)
         let job3 = Job(newJID: "ABC", newTitle: "Test 3", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description 3", newDueDate: 1479423103, newDate: 1479423103)
