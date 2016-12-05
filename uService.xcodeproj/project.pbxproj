@@ -16,6 +16,8 @@
 		0DA517911DF4D753004591FC /* MyApplicationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA517901DF4D753004591FC /* MyApplicationsTableViewController.swift */; };
 		0DABCC301DB5E1B4003B333D /* CurrencyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DABCC2E1DB5E1B4003B333D /* CurrencyField.swift */; };
 		0DABCC311DB5E1B4003B333D /* NewJobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */; };
+		0DC77DD71DF4EE4300B481D6 /* PostedJobsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC77DD61DF4EE4300B481D6 /* PostedJobsTableViewController.swift */; };
+		0DC77DDB1DF4FF8400B481D6 /* SelectedApplicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC77DDA1DF4FF8400B481D6 /* SelectedApplicationViewController.swift */; };
 		0DD272631DCBA2B2001AC3A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DD272621DCBA2B2001AC3A0 /* MapKit.framework */; };
 		0DD272651DCBA2C4001AC3A0 /* SearchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */; };
 		0DDB3D571DCBEB2100247EA9 /* Currency Filled-30.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DDB3D511DCBEB2100247EA9 /* Currency Filled-30.png */; };
@@ -28,7 +30,6 @@
 		0DE015A21D9B4700001C3EFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DE015A01D9B4700001C3EFF /* Main.storyboard */; };
 		0DE015A41D9B4700001C3EFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DE015A31D9B4700001C3EFF /* Assets.xcassets */; };
 		0DE015A71D9B4700001C3EFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DE015A51D9B4700001C3EFF /* LaunchScreen.storyboard */; };
-		0DE015B31D9B8276001C3EFF /* SelectedJobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE015B21D9B8276001C3EFF /* SelectedJobViewController.swift */; };
 		2F99BCAE1DE5EB2B009B0C05 /* JobApplicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */; };
 		2F99BCB21DE5FB43009B0C05 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F99BCB11DE5FB43009B0C05 /* CreateAccountViewController.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,8 @@
 		0DA517901DF4D753004591FC /* MyApplicationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyApplicationsTableViewController.swift; sourceTree = "<group>"; };
 		0DABCC2E1DB5E1B4003B333D /* CurrencyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyField.swift; sourceTree = "<group>"; };
 		0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewJobViewController.swift; sourceTree = "<group>"; };
+		0DC77DD61DF4EE4300B481D6 /* PostedJobsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostedJobsTableViewController.swift; sourceTree = "<group>"; };
+		0DC77DDA1DF4FF8400B481D6 /* SelectedApplicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectedApplicationViewController.swift; path = ../SelectedApplicationViewController.swift; sourceTree = "<group>"; };
 		0DD272621DCBA2B2001AC3A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScreenViewController.swift; sourceTree = "<group>"; };
 		0DDB3D511DCBEB2100247EA9 /* Currency Filled-30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Currency Filled-30.png"; path = "Assets.xcassets/Currency Filled-30.png"; sourceTree = "<group>"; };
@@ -57,7 +60,6 @@
 		0DE015A31D9B4700001C3EFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0DE015A61D9B4700001C3EFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0DE015A81D9B4700001C3EFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0DE015B21D9B8276001C3EFF /* SelectedJobViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedJobViewController.swift; sourceTree = "<group>"; };
 		2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobApplicationViewController.swift; sourceTree = "<group>"; };
 		2F99BCB11DE5FB43009B0C05 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,8 +114,9 @@
 				0DA517901DF4D753004591FC /* MyApplicationsTableViewController.swift */,
 				0DA5178E1DF4C6AB004591FC /* MyJobsTableViewController.swift */,
 				0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */,
+				0DC77DD61DF4EE4300B481D6 /* PostedJobsTableViewController.swift */,
 				0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */,
-				0DE015B21D9B8276001C3EFF /* SelectedJobViewController.swift */,
+				0DC77DDA1DF4FF8400B481D6 /* SelectedApplicationViewController.swift */,
 				0DA517881DF49D29004591FC /* TabBarController.swift */,
 				0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */,
 				0DE015A51D9B4700001C3EFF /* LaunchScreen.storyboard */,
@@ -211,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DC77DD71DF4EE4300B481D6 /* PostedJobsTableViewController.swift in Sources */,
 				0DD272651DCBA2C4001AC3A0 /* SearchScreenViewController.swift in Sources */,
 				0D9DF6551DB838EE0010FCD3 /* UserViewController.swift in Sources */,
 				0DA5178F1DF4C6AB004591FC /* MyJobsTableViewController.swift in Sources */,
@@ -218,8 +222,8 @@
 				0D9DF6511DB82F320010FCD3 /* LoginViewController.swift in Sources */,
 				0DE0159D1D9B4700001C3EFF /* AppDelegate.swift in Sources */,
 				0DA5178D1DF4A4DF004591FC /* LoggedInNavigationController.swift in Sources */,
+				0DC77DDB1DF4FF8400B481D6 /* SelectedApplicationViewController.swift in Sources */,
 				2F99BCAE1DE5EB2B009B0C05 /* JobApplicationViewController.swift in Sources */,
-				0DE015B31D9B8276001C3EFF /* SelectedJobViewController.swift in Sources */,
 				0DABCC311DB5E1B4003B333D /* NewJobViewController.swift in Sources */,
 				0DA517911DF4D753004591FC /* MyApplicationsTableViewController.swift in Sources */,
 				0DA517891DF49D29004591FC /* TabBarController.swift in Sources */,

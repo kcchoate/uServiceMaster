@@ -1,19 +1,18 @@
 //
-//  JobApplicationViewController.swift
+//  SelectedApplicationViewController.swift
 //  uService
 //
-//  Created by Tyler Allen on 11/23/16.
+//  Created by Kendrick Choate on 12/4/16.
 //  Copyright © 2016 Kendrick Choate. All rights reserved.
 //
 
 import UIKit
 
-class JobApplicationViewController: UIViewController {
+class SelectedApplicationViewController: UIViewController {
     var selectedJob = Job()
-    
-    @IBOutlet weak var dueByTextView: UITextView!
     @IBOutlet weak var paymentTextView: UITextView!
-    @IBOutlet weak var jobDateTextView: UITextView!
+    @IBOutlet weak var postedTextView: UITextView!
+    @IBOutlet weak var dueByTextView: UITextView!
     @IBOutlet weak var detailsTextView: UITextView!
     
     override func viewDidLoad() {
@@ -26,7 +25,7 @@ class JobApplicationViewController: UIViewController {
         currencyFormatter.numberStyle = .currency
         dueByTextView.text! = dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob.dueDate))
         paymentTextView.text! = currencyFormatter.string(from: NSNumber(value: selectedJob.pay))!
-        jobDateTextView.text! = dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob.date))
+        postedTextView.text! = dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob.date))
         detailsTextView.text! = selectedJob.description
     }
 
@@ -35,11 +34,6 @@ class JobApplicationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func applyForJobPressed() {
-        
-    }
-
     /*
     // MARK: - Navigation
 

@@ -9,6 +9,7 @@
 import UIKit
 
 class MyApplicationsTableViewController: UITableViewController {
+    var selectedCell: Int = 0
     var listOfJobs: [Job] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,10 +108,13 @@ class MyApplicationsTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        selectedCell = indexPath.row
+        return indexPath
+    }
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
@@ -128,31 +132,21 @@ class MyApplicationsTableViewController: UITableViewController {
         }
     }
     
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+        if (segue.identifier == "viewSelectedApplication") {
+            let destinationVC = segue.destination as! SelectedApplicationViewController
+            destinationVC.selectedJob = listOfJobs[selectedCell]
+            destinationVC.title = listOfJobs[selectedCell].title
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = "Back"
+            navigationItem.backBarButtonItem = backItem
+        }
      }
-     */
+    
 
 
 }

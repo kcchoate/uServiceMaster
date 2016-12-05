@@ -25,6 +25,16 @@ class Job {
         description = newDescription
         date = newDate
     }
+    init () {
+        //default constructor used for testing
+        jid = "Test job"
+        title = "Test job"
+        location = "Test job"
+        pay = 0
+        description = "Test job"
+        dueDate = 0
+        date = 0
+    }
 }
 class MyJobsTableViewController: UITableViewController {
     var listOfJobs: [Job] = []
