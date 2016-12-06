@@ -47,6 +47,10 @@ class UserViewController: UIViewController {
         let backItem = UIBarButtonItem()
         backItem.title = "Back"
         navigationItem.backBarButtonItem = backItem
+        if segue.identifier == "userSettingsSegue" {
+            let secondVC = segue.destination as! ModifyAccountViewController
+            secondVC.loggedinUser = self.loggedInUser
+        }
     }
     
 }

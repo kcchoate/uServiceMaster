@@ -192,6 +192,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let firstNavController = destinationVC.viewControllers?[0] as! LoggedInNavigationController
             let userViewController = firstNavController.viewControllers[0] as! UserViewController
             userViewController.loggedInUser = self.loggedInUser
+            let secondNavController = destinationVC.viewControllers?[1] as! LoggedInNavigationController
+            let newJobViewController = secondNavController.viewControllers[0] as! NewJobViewController
+            newJobViewController.loggedInUser = self.loggedInUser
+            let thirdNavController = destinationVC.viewControllers?[2] as! LoggedInNavigationController
+            let findJobViewController = thirdNavController.viewControllers[0] as! PostedJobsTableViewController
+            findJobViewController.loggedInUser = self.loggedInUser
             
             
             

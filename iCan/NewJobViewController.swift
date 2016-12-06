@@ -26,7 +26,7 @@ class NewJob {
 }
 
 class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
-
+    var loggedInUser: LoggedInUser? = nil
     @IBOutlet weak var jobTitleTextField: UITextField!
     @IBOutlet weak var jobLocationTextField: UITextField!
     @IBOutlet weak var jobPriceTextField: UITextField!

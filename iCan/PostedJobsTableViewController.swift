@@ -9,6 +9,7 @@
 import UIKit
 
 class PostedJobsTableViewController: UITableViewController {
+    var loggedInUser: LoggedInUser? = nil
     var listOfJobs: [Job] = []
     var selectedCell: Int = 0
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
