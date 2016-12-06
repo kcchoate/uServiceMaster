@@ -37,7 +37,7 @@ class JobApplicationViewController: UIViewController {
     
     
     @IBAction func applyForJobPressed() {
-        
+        //TODO: - Send application to job to server 
     }
 
     /*

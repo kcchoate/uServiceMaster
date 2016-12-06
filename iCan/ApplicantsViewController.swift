@@ -6,6 +6,9 @@
 //  Copyright © 2016 Kendrick Choate. All rights reserved.
 //
 
+
+//TODO: - Attach table view and pull applicants into the table view. Push the applicant to next VC to see applicant resume. Also need to update view once UI changes are complete
+
 import UIKit
 
 class ApplicantsViewController: UIViewController {

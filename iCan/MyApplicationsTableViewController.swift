@@ -16,10 +16,10 @@ class MyApplicationsTableViewController: UITableViewController {
         self.tableView.separatorStyle = .singleLine
         self.tableView.separatorColor = colorDarkGreen
         super.viewDidLoad()
-        let job1 = Job(newJID: "ABC", newTitle: "Test 1", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job2 = Job(newJID: "ABC", newTitle: "Test 2", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job3 = Job(newJID: "ABC", newTitle: "Test 3", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job4 = Job(newJID: "ABC", newTitle: "Test 4", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
+        let job1 = Job(JID: "ABC", Title: "Test 1", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
+        let job2 = Job(JID: "ABC", Title: "Test 2", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
+        let job3 = Job(JID: "ABC", Title: "Test 3", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
+        let job4 = Job(JID: "ABC", Title: "Test 4", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
         listOfJobs.append(job1)
         listOfJobs.append(job2)
         listOfJobs.append(job3)

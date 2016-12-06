@@ -10,26 +10,29 @@ import UIKit
 class Job {
     var jid: String
     var title: String
-    var location: String
+    var longitude: String
+    var latitude: String
     var pay: Float
     var description: String
     var dueDate: Double
     var date: Double
-    init (newJID: String, newTitle: String, newLocation: String, newPay: Float, newDescription: String, newDueDate: Double, newDate: Double) {
+    init (JID: String, Title: String, Longitude: String, Latitude: String, Pay: Float, Description: String, DueDate: Double, PostDate: Double) {
         //jUID, date, pay, title, description, duedate
-        jid = newJID
-        title = newTitle
-        location = newLocation
-        dueDate = newDueDate
-        pay = newPay
-        description = newDescription
-        date = newDate
+        jid = JID
+        title = Title
+        longitude = Longitude
+        latitude = Latitude
+        pay = Pay
+        description = Description
+        dueDate = DueDate
+        date = PostDate
     }
     init () {
         //default constructor used for testing
         jid = "Test job"
         title = "Test job"
-        location = "Test job"
+        longitude = "0"
+        latitude = "0"
         pay = 0
         description = "Test job"
         dueDate = 0
@@ -46,10 +49,10 @@ class MyJobsTableViewController: UITableViewController {
         self.tableView.separatorStyle = .singleLine
         self.tableView.separatorColor = colorDarkGreen
         
-        let job1 = Job(newJID: "ABC", newTitle: "Test 1", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job2 = Job(newJID: "ABC", newTitle: "Test 2", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job3 = Job(newJID: "ABC", newTitle: "Test 3", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
-        let job4 = Job(newJID: "ABC", newTitle: "Test 4", newLocation: "Houston, TX", newPay: 20.00, newDescription: "Test description", newDueDate: 1479423103, newDate: 1479423103)
+        let job1 = Job(JID: "ABC", Title: "Test 1", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
+        let job2 = Job(JID: "ABC", Title: "Test 2", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
+        let job3 = Job(JID: "ABC", Title: "Test 3", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
+        let job4 = Job(JID: "ABC", Title: "Test 4", Longitude: "0", Latitude: "0", Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
         listOfJobs.append(job1)
         listOfJobs.append(job2)
         listOfJobs.append(job3)

@@ -9,20 +9,37 @@ protocol NewJobDelegate {
 }
 
 class NewJob {
-    var jobTitle: String
-    var jobLocation: String
-    var jobPrice: Float
-    var jobDetails: String
-    var jobCategory: String
-    var jobDate: Date
-    init (newJobTitle: String, newJobCategory: String, newJobLocation: String, newJobDate: Date, newJobPrice: Float, newJobDetails: String) {
-        jobTitle = newJobTitle
-        jobCategory = newJobCategory
-        jobLocation = newJobLocation
-        jobDate = newJobDate
-        jobPrice = newJobPrice
-        jobDetails = newJobDetails
+    var owner: String
+    var title: String
+    var latitude: String
+    var longitude: String
+    var pay: Float
+    var description: String
+    var dueDate: Double
+    var date: Double
+    init (newOwner: String, newTitle: String, newLongitude: String, newLatitude: String, newPay: Float, newDescription: String, newDueDate: Double, newDate: Double) {
+        //date, pay, title, description, duedate
+        owner = newOwner
+        title = newTitle
+        longitude = newLongitude
+        latitude = newLatitude
+        dueDate = newDueDate
+        pay = newPay
+        description = newDescription
+        date = newDate
     }
+    init () {
+        //default constructor used for testing
+        owner = "Test job"
+        title = "Test job"
+        longitude = "0"
+        latitude = "0"
+        pay = 0
+        description = "Test job"
+        dueDate = 0
+        date = 0
+    }
+
 }
 
 class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
@@ -55,6 +72,7 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         //set the text field delegates to this controller, allowing us to enable/disable the add job button based on text entry as well as format the fields
         jobTitleTextField.delegate = self
         jobPriceTextField.delegate = self
+        jobDateTextField.delegate = self
         
         //hide the keyboard when the user clicks on the screen
         self.hideKeyboardWhenTappedAround()
@@ -82,10 +100,12 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             // The next lines format the date field
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
-            let jobDate = dateFormatter.date(from: jobDateTextField.text!)!
-            let usersNewJob = Job()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .medium
+            let dueDate = dateFormatter.date(from: jobDateTextField.text!)?.timeIntervalSince1970
+            let usersNewJob = NewJob(newOwner: (loggedInUser?.uid)!, newTitle: jobTitle, newLongitude: (loggedInUser?.long)!, newLatitude: (loggedInUser?.lat)!, newPay: jobPrice, newDescription: jobDetails, newDueDate: dueDate!, newDate: Date.init().timeIntervalSince1970)
+            //TODO: - Send usersNewJob to server
+            
             _ = navigationController?.popViewController(animated: true) // Swift 3 has changed behavior and any function that returns something that can be discarded now gives a warning when doing so. By assigning the result to _ we can get rid of the stupid warning.
         }
     }
@@ -120,7 +140,7 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     //MARK: - UITextFieldDelegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // The next five if statements test the textfields for text to verify that all fields have text in them each time the text field is changed. If any don't have text, the addJobButton is disabled
+        // The next three if statements test the textfields for text to verify that all fields have text in them each time the text field is changed. If any don't have text, the addJobButton is disabled
         
         if textField == jobTitleTextField
         {
@@ -133,7 +153,7 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
                 bottomAddJobButton.isEnabled = true
             }
         }
-                if textField == jobPriceTextField
+        if textField == jobPriceTextField
         {
             let oldStr = jobPriceTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
@@ -144,7 +164,7 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
                 bottomAddJobButton.isEnabled = true
             }
         }
-                if textField == jobDateTextField
+        if textField == jobDateTextField
         {
             let oldStr = jobPriceTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString

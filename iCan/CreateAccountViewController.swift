@@ -226,14 +226,14 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         {
             let oldStr = passwordTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != newStr as String
             {
                 createButton.isEnabled = false
             }
             else {
                 createButton.isEnabled = true
             }
-            if newStr as? String != passwordVerificationTextField.text! && passwordVerificationTextField.text!.characters.count > 0 {
+            if newStr as String != passwordVerificationTextField.text! && passwordVerificationTextField.text!.characters.count > 0 {
                 passwordTextField.backgroundColor = UIColor.red
                 passwordVerificationTextField.backgroundColor = UIColor.red
             }
@@ -248,14 +248,14 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         {
             let oldStr = passwordVerificationTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || newStr as String != passwordTextField.text
             {
                 createButton.isEnabled = false
             }
             else {
                 createButton.isEnabled = true
             }
-            if newStr as? String != passwordTextField.text! {
+            if newStr as String != passwordTextField.text! {
                 passwordTextField.backgroundColor = UIColor.red
                 passwordVerificationTextField.backgroundColor = UIColor.red
             }
