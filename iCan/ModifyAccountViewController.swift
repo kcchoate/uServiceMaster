@@ -13,11 +13,13 @@ import CoreGraphics
 
 class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate {
     
-    var loggedInUser: LoggedInUser? = nil
     @IBOutlet weak var newPasswordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var resumeTextView: UITextView!
     @IBOutlet weak var updateButton: UIButton!
+    @IBOutlet weak var newLocationSwitch: UISwitch!
+    
+    var loggedInUser: LoggedInUser? = nil
     var backgroundGrey: UIColor? = nil
     let locationManager = CLLocationManager()
     var newLocationLongitude: CLLocationDegrees = 0
@@ -46,17 +48,35 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     }
     
     @IBAction func newLocationSwitchOn() {
-        locationUpdated = true
-        LoadingOverlay.shared.showOverlay(view: self.view)
-        locationManager.requestLocation()
-        LoadingOverlay.shared.hideOverlayView()
-        let numberFormatter = NumberFormatter()
-        numberFormatter.minimumFractionDigits = 1
-        numberFormatter.maximumFractionDigits = 1
-        numberFormatter.minimumIntegerDigits = 2
-        numberFormatter.maximumIntegerDigits = 2
-        updatedLatitude = numberFormatter.string(from: NSNumber(value: newLocationLatitude))!
-        updatedLongitude = numberFormatter.string(from: NSNumber(value: newLocationLongitude))!
+        if (newLocationSwitch.isOn) {
+            locationUpdated = true
+            LoadingOverlay.shared.showOverlay(view: self.view)
+            locationManager.requestLocation()
+            LoadingOverlay.shared.hideOverlayView()
+            let numberFormatter = NumberFormatter()
+            numberFormatter.minimumFractionDigits = 1
+            numberFormatter.maximumFractionDigits = 1
+            numberFormatter.minimumIntegerDigits = 2
+            numberFormatter.maximumIntegerDigits = 2
+            updatedLatitude = numberFormatter.string(from: NSNumber(value: newLocationLatitude))!
+            updatedLongitude = numberFormatter.string(from: NSNumber(value: newLocationLongitude))!
+            
+            if (newPasswordTextField.text! != confirmPasswordTextField.text!) {
+                updateButton.isEnabled = false
+            }
+            else {
+                updateButton.isEnabled = true
+            }
+        }
+        else {
+            locationUpdated = false
+            if ( (newPasswordTextField.text! == confirmPasswordTextField.text! && newPasswordTextField.text!.characters.count > 0) || resumeTextView.text.characters.count > 0 ) {
+                updateButton.isEnabled = true
+            }
+            else {
+                updateButton.isEnabled = false
+            }
+        }
     }
     
     @IBAction func updateButtonPressed() {
@@ -116,13 +136,15 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
                 newPasswordTextField.backgroundColor = backgroundGrey
                 confirmPasswordTextField.backgroundColor = backgroundGrey
             }
-            
+            if (newStr.length == 0 && confirmPasswordTextField.text!.characters.count == 0 && (locationUpdated || resumeTextView.text.characters.count > 0)) {
+                updateButton.isEnabled = true
+            }
         }
         if textField == confirmPasswordTextField
         {
             let oldStr = confirmPasswordTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || newPasswordTextField.text!.characters.count == 0 || newStr as String != newPasswordTextField.text
+            if (newStr.length == 0 || newPasswordTextField.text!.characters.count == 0 || newStr as String != newPasswordTextField.text)
             {
                 updateButton.isEnabled = false
             }
@@ -137,7 +159,10 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
                 
                 newPasswordTextField.backgroundColor = backgroundGrey
                 confirmPasswordTextField.backgroundColor = backgroundGrey
-                
+            }
+            
+            if (newStr.length == 0 && newPasswordTextField.text!.characters.count == 0 && (locationUpdated || resumeTextView.text.characters.count > 0)) {
+                updateButton.isEnabled = true
             }
         }
         //and here we limit the text fields to a maximum of 25 characters
@@ -150,12 +175,17 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if newPasswordTextField.text != confirmPasswordTextField.text
+        if newPasswordTextField.text == confirmPasswordTextField.text
         {
             updateButton.isEnabled = false
         }
         else {
-            updateButton.isEnabled = true
+            if (locationUpdated || resumeTextView.text!.characters.count > 0) {
+                updateButton.isEnabled = true
+            }
+            else {
+                updateButton.isEnabled = false
+            }
         }
         
     }
@@ -173,6 +203,12 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
+        if ((numberOfChars > 0 || locationUpdated) && confirmPasswordTextField.text! == newPasswordTextField.text!) {
+            updateButton.isEnabled = true
+        }
+        else {
+            updateButton.isEnabled = false
+        }
         return numberOfChars <= 280;
     }
     
