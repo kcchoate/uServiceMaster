@@ -6,9 +6,6 @@
 //  Copyright © 2016 Kendrick Choate. All rights reserved.
 //
 
-
-//TODO: - Attach table view and pull applicants into the table view. Push the applicant to next VC to see applicant resume. Also need to update view once UI changes are complete
-
 class Applicant {
     var id: String
     var resume: String
@@ -42,6 +39,7 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
         applicantTableView.delegate = self
         applicantTableView.dataSource = self
+        
         //setting up the job labels
         dateFormatter.dateStyle = .medium
         numberFormatter.locale = Locale(identifier: "en-US")
@@ -50,6 +48,7 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
         jobDueByLabel.text! = "Due by: \(dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob!.dueDate)))"
         jobPayLabel.text! = "Job cost: \(numberFormatter.string(from: NSNumber(value: selectedJob!.pay))!)"
         
+        //TODO: - Connect to server to pull applicant info
         let applicant1 = Applicant(aid: "test", applicantResume: "test resume")
         let applicant2 = Applicant()
         listOfApplicants.append(applicant1)
@@ -75,25 +74,35 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        
         cell.textLabel?.text = "\(listOfApplicants[indexPath.row].id)"
-        
         return cell
     }
     
+    //saves the selected cell to know which data in the array of applicants to pass to next vc
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         selectedCell = indexPath.row
         return indexPath
     }
-
-    /*
+    
+    //deselects the cell after it is selected, else it stays selected after popping the next VC
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.applicantTableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let backItem = UIBarButtonItem()
+        backItem.title = "Back"
+        self.navigationItem.backBarButtonItem = backItem
+        if (segue.identifier == "viewApplicantResume") {
+            let nextVC = segue.destination as! ResumeViewController
+            nextVC.selectedJob = self.selectedJob
+            nextVC.selectedApplicant = listOfApplicants[selectedCell]
+            nextVC.title = listOfApplicants[selectedCell].id
+        }
     }
-    */
+
 
 }

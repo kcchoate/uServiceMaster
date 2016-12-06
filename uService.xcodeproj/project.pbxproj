@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D3FFA481DB96F090021A722 /* Ronald Reagan.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 0D3FFA471DB96F090021A722 /* Ronald Reagan.jpeg */; };
+		0D7C0F501DF76F56009FCE1E /* ResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7C0F4F1DF76F56009FCE1E /* ResumeViewController.swift */; };
 		0D9DF6511DB82F320010FCD3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF6501DB82F320010FCD3 /* LoginViewController.swift */; };
 		0D9DF6551DB838EE0010FCD3 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */; };
 		0DA517891DF49D29004591FC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA517881DF49D29004591FC /* TabBarController.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		0D3FFA471DB96F090021A722 /* Ronald Reagan.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Ronald Reagan.jpeg"; path = "Assets.xcassets/Ronald Reagan.jpeg"; sourceTree = "<group>"; };
+		0D7C0F4F1DF76F56009FCE1E /* ResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeViewController.swift; sourceTree = "<group>"; };
 		0D9DF6501DB82F320010FCD3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		0DA517881DF49D29004591FC /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				0DA5178E1DF4C6AB004591FC /* MyJobsTableViewController.swift */,
 				0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */,
 				0DC77DD61DF4EE4300B481D6 /* PostedJobsTableViewController.swift */,
+				0D7C0F4F1DF76F56009FCE1E /* ResumeViewController.swift */,
 				0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */,
 				0DC77DDC1DF5038C00B481D6 /* SelectedApplicationViewController.swift */,
 				0DA517881DF49D29004591FC /* TabBarController.swift */,
@@ -236,6 +239,7 @@
 				0DA517891DF49D29004591FC /* TabBarController.swift in Sources */,
 				0DABCC301DB5E1B4003B333D /* CurrencyField.swift in Sources */,
 				2F36745B1DF6506300BE52BD /* ModifyAccountViewController.swift in Sources */,
+				0D7C0F501DF76F56009FCE1E /* ResumeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

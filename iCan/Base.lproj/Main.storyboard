@@ -405,6 +405,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.58823529409999997" green="0.87843137250000003" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="yI7-NA-h4e" kind="show" identifier="viewApplicantResume" id="Zeh-bi-mNs"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -455,10 +458,10 @@
             </objects>
             <point key="canvasLocation" x="4859.5" y="-1603.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Resume View Controller-->
         <scene sceneID="6Nr-vC-cch">
             <objects>
-                <viewController id="yI7-NA-h4e" sceneMemberID="viewController">
+                <viewController id="yI7-NA-h4e" customClass="ResumeViewController" customModule="uService" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AqE-B1-V1F"/>
                         <viewControllerLayoutGuide type="bottom" id="3Db-kj-ylr"/>
