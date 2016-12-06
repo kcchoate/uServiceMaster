@@ -9,29 +9,82 @@
 
 //TODO: - Attach table view and pull applicants into the table view. Push the applicant to next VC to see applicant resume. Also need to update view once UI changes are complete
 
+class Applicant {
+    var id: String
+    var resume: String
+    init(aid: String, applicantResume: String) {
+        id = aid
+        resume = applicantResume
+    }
+    init() {
+        id = "hi"
+        resume = "Awesome"
+    }
+}
+
 import UIKit
 
-class ApplicantsViewController: UIViewController {
-    var selectedJob: Job? = nil
+class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var jobTitleLabel: UILabel!
+    @IBOutlet weak var jobPayLabel: UILabel!
+    @IBOutlet weak var jobDueByLabel: UILabel!
     @IBOutlet weak var datePostedLabel: UILabel!
-
-    @IBOutlet weak var applicantsTable: UITableView!
+    @IBOutlet weak var applicantTableView: UITableView!
+    
+    var selectedJob: Job? = nil
+    var listOfApplicants: [Applicant] = []
+    var selectedCell = 0
+    let numberFormatter = NumberFormatter()
+    let dateFormatter = DateFormatter()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        jobTitleLabel.text! = (selectedJob?.title)!
-        let dateFormatter = DateFormatter()
+        applicantTableView.delegate = self
+        applicantTableView.dataSource = self
+        //setting up the job labels
         dateFormatter.dateStyle = .medium
-        datePostedLabel.text! = dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob!.date))
-        // Do any additional setup after loading the view.
+        numberFormatter.locale = Locale(identifier: "en-US")
+        numberFormatter.numberStyle = .currency
+        datePostedLabel.text! = "Date posted: \(dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob!.date)))"
+        jobDueByLabel.text! = "Due by: \(dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob!.dueDate)))"
+        jobPayLabel.text! = "Job cost: \(numberFormatter.string(from: NSNumber(value: selectedJob!.pay))!)"
+        
+        let applicant1 = Applicant(aid: "test", applicantResume: "test resume")
+        let applicant2 = Applicant()
+        listOfApplicants.append(applicant1)
+        listOfApplicants.append(applicant2)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    // MARK: - Table view data source
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return listOfApplicants.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        cell.textLabel?.text = "\(listOfApplicants[indexPath.row].id)"
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        selectedCell = indexPath.row
+        return indexPath
+    }
 
     /*
     // MARK: - Navigation
