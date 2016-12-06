@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//TODO: - Add button to remove application from server. Will need to connect to server to do so.
 class SelectedApplicationViewController: UIViewController {
     var selectedJob = Job()
     @IBOutlet weak var paymentTextView: UITextView!

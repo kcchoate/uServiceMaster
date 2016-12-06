@@ -4,33 +4,32 @@
 //
 
 import UIKit
-class user {
-    var userID: Int
-    var firstName: String
-    var lastName: String
-    var emailAddress: String?
-    var phoneNumber: Int?
-    var userRating: Int
-    init () {
-        userID = 0
-        firstName = ""
-        lastName = ""
-        emailAddress = nil
-        phoneNumber = nil
-        userRating = 0
-    }
-}
+import CoreLocation
 class UserViewController: UIViewController {
     var loggedInUser: LoggedInUser? = nil
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    
+    let geocoder = CLGeocoder()
+    var userCity = "Loading"
+    var userState = "..."
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userLocation = CLLocation(latitude: Double((loggedInUser?.lat)!)!, longitude: Double((loggedInUser?.long)!)!)
+        DispatchQueue.main.async {
+            self.geocoder.reverseGeocodeLocation(userLocation, completionHandler: { (placemarks, error) -> Void in
+                let placemark = placemarks?[0]
+                self.userCity = placemark?.addressDictionary!["City"] as! String
+                self.userState = placemark?.addressDictionary!["State"] as! String
+                self.locationLabel.text = "\(self.userCity), \(self.userState)"
+                self.nameLabel.text = "\((self.loggedInUser?.firstName)!) \((self.loggedInUser?.lastName)!)"
+                self.emailLabel.text = "\((self.loggedInUser?.uid)!)"
+            })
+        
+        }
+        
         nameLabel.text = "\((loggedInUser?.firstName)!) \((loggedInUser?.lastName)!)"
         emailLabel.text = (loggedInUser?.email)!
-        locationLabel.text = "\((loggedInUser?.city)!), \((loggedInUser?.state)!), \((loggedInUser?.zip)!)"
         //self.navigationController?.navigationBar.isHidden = true
     }
 
@@ -49,7 +48,7 @@ class UserViewController: UIViewController {
         navigationItem.backBarButtonItem = backItem
         if segue.identifier == "userSettingsSegue" {
             let secondVC = segue.destination as! ModifyAccountViewController
-            secondVC.loggedinUser = self.loggedInUser
+            secondVC.loggedInUser = self.loggedInUser
         }
     }
     

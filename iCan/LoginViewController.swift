@@ -10,8 +10,8 @@ class LoggedInUser {
     var firstName: String? = "First"
     var lastName: String? = "Last"
     var email: String? = "example@example.com"
-    var lat: String? = "10.1"
-    var long: String? = "10.1"
+    var lat: String? = "47.6"
+    var long: String? = "-122.3"
     
     init(UID: String, FirstName: String, LastName: String, Email: String, Lat: String, Long: String) {
         uid = UID

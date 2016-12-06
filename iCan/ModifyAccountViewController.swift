@@ -150,7 +150,7 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if newPasswordTextField.text!.characters.count == 0 || confirmPasswordTextField.text!.characters.count == 0 || newPasswordTextField.text != confirmPasswordTextField.text
+        if newPasswordTextField.text != confirmPasswordTextField.text
         {
             updateButton.isEnabled = false
         }
