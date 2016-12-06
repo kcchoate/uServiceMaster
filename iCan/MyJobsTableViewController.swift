@@ -37,6 +37,7 @@ class Job {
     }
 }
 class MyJobsTableViewController: UITableViewController {
+    var selectedCell: Int = 0
     var listOfJobs: [Job] = []
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     
@@ -141,6 +142,10 @@ class MyJobsTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        selectedCell = indexPath.row
+        return indexPath
+    }
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -178,14 +183,18 @@ class MyJobsTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "viewMyPostedJob" {
+            let backButton = UIBarButtonItem()
+            backButton.title = "Back"
+            self.navigationItem.backBarButtonItem = backButton
+            let nextVC = segue.destination as! ApplicantsViewController
+            nextVC.selectedJob = listOfJobs[selectedCell]
+            nextVC.title = listOfJobs[selectedCell].title
+        }
     }
-    */
 
 }

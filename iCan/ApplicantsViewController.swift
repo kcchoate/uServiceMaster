@@ -9,10 +9,18 @@
 import UIKit
 
 class ApplicantsViewController: UIViewController {
+    var selectedJob: Job? = nil
+    
+    @IBOutlet weak var jobTitleLabel: UILabel!
+    @IBOutlet weak var datePostedLabel: UILabel!
 
+    @IBOutlet weak var applicantsTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        jobTitleLabel.text! = (selectedJob?.title)!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        datePostedLabel.text! = dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob!.date))
         // Do any additional setup after loading the view.
     }
 

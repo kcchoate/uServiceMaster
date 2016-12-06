@@ -25,40 +25,19 @@ class NewJob {
     }
 }
 
-class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     var loggedInUser: LoggedInUser? = nil
     @IBOutlet weak var jobTitleTextField: UITextField!
-    @IBOutlet weak var jobLocationTextField: UITextField!
     @IBOutlet weak var jobPriceTextField: UITextField!
-    @IBOutlet weak var jobCategoryTextField: UITextField!
     @IBOutlet weak var jobDateTextField: UITextField!
     @IBOutlet weak var jobDetailsTextField: UITextView!
     @IBOutlet weak var bottomAddJobButton: UIButton!
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
-    var pickOption = ["Housework", "Landscaping", "Painting", "Woodwork"]
     var delegate: NewJobDelegate? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         bottomAddJobButton.isEnabled = false
-        
-        // We setup the picker view for the category text field here
-        let pickerView = UIPickerView()
-        pickerView.delegate = self
-        jobCategoryTextField.inputView = pickerView
-        
-        // And here we setup a toolbar addon to the pickerView to close out of the session
-        let categoryCloseToolBar = UIToolbar()
-        categoryCloseToolBar.barStyle = .default
-        categoryCloseToolBar.isTranslucent = true
-        categoryCloseToolBar.tintColor = colorDarkGreen
-        categoryCloseToolBar.sizeToFit()
-        let categoryDoneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(categoryOKClicked))
-        let categorySpaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let categoryCancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(categoryCancelClicked))
-        categoryCloseToolBar.setItems([categoryCancelButton, categorySpaceButton, categoryDoneButton], animated: false)
-        categoryCloseToolBar.isUserInteractionEnabled = true
-        jobCategoryTextField.inputAccessoryView = categoryCloseToolBar
         
         // We setup a different toolbar for the same functionality for the date selector
         let dateCloseToolBar = UIToolbar()
@@ -75,9 +54,7 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         
         //set the text field delegates to this controller, allowing us to enable/disable the add job button based on text entry as well as format the fields
         jobTitleTextField.delegate = self
-        jobLocationTextField.delegate = self
         jobPriceTextField.delegate = self
-        jobDetailsTextField.delegate = self
         
         //hide the keyboard when the user clicks on the screen
         self.hideKeyboardWhenTappedAround()
@@ -90,22 +67,12 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         jobDateTextField.text = ""
         jobDateTextField.resignFirstResponder()
     }
-    func categoryOKClicked() {
-        jobCategoryTextField.resignFirstResponder()
-    }
-    func categoryCancelClicked() {
-        jobCategoryTextField.text = ""
-        jobCategoryTextField.resignFirstResponder()
-    }
-
     
     
     @IBAction func addNewJobButtonPressed(_ sender: AnyObject) {
         //We only perform any actions assuming the delegate for this classes protocol has been set. Assuming it as, we call the delegate method when the button is pressed. We then pop the view to go back to the previous screen
         if delegate != nil {
             let jobTitle = jobTitleTextField.text!
-            let jobCategory = jobCategoryTextField.text!
-            let jobLocation = jobLocationTextField.text!
             let jobDetails = jobDetailsTextField.text!
             // The next lines format the price field
             let priceField = jobPriceTextField.text!
@@ -118,8 +85,7 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             let jobDate = dateFormatter.date(from: jobDateTextField.text!)!
-            let usersNewJob = NewJob(newJobTitle: jobTitle, newJobCategory: jobCategory, newJobLocation: jobLocation, newJobDate: jobDate, newJobPrice: jobPrice, newJobDetails: jobDetails)
-            delegate?.addJobButtonPressed(aNewJob: usersNewJob)
+            let usersNewJob = Job()
             _ = navigationController?.popViewController(animated: true) // Swift 3 has changed behavior and any function that returns something that can be discarded now gives a warning when doing so. By assigning the result to _ we can get rid of the stupid warning.
         }
     }
@@ -146,11 +112,6 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         jobDateTextField.text = formatter.string(from: sender.date)
     }
     
-    @IBAction func jobCategoryTextFIeldSelected() {
-        jobCategoryTextField.text = "Housework"
-    }
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -165,51 +126,29 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         {
             let oldStr = jobTitleTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || jobLocationTextField.text!.characters.count == 0 || jobPriceTextField.text!.characters.count == 0 || jobCategoryTextField.text!.characters.count == 0 || jobDateTextField.text!.characters.count == 0{
+            if newStr.length == 0 || jobPriceTextField.text!.characters.count == 0 || jobDateTextField.text!.characters.count == 0{
                 bottomAddJobButton.isEnabled = false
             }
             else {
                 bottomAddJobButton.isEnabled = true
             }
         }
-        if textField == jobLocationTextField
-        {
-            let oldStr = jobLocationTextField.text! as NSString
-            let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || jobTitleTextField.text!.characters.count == 0 || jobPriceTextField.text!.characters.count == 0 || jobCategoryTextField.text!.characters.count == 0 || jobDateTextField.text!.characters.count == 0{
-                bottomAddJobButton.isEnabled = false
-            }
-            else {
-                bottomAddJobButton.isEnabled = true
-            }
-        }
-        if textField == jobPriceTextField
+                if textField == jobPriceTextField
         {
             let oldStr = jobPriceTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || jobTitleTextField.text!.characters.count == 0 || jobLocationTextField.text!.characters.count == 0 || jobCategoryTextField.text!.characters.count == 0 || jobDateTextField.text!.characters.count == 0{
+            if newStr.length == 0 || jobTitleTextField.text!.characters.count == 0 || jobDateTextField.text!.characters.count == 0{
                 bottomAddJobButton.isEnabled = false
             }
             else {
                 bottomAddJobButton.isEnabled = true
             }
         }
-        if textField == jobCategoryTextField
+                if textField == jobDateTextField
         {
             let oldStr = jobPriceTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || jobTitleTextField.text!.characters.count == 0 || jobLocationTextField.text!.characters.count == 0 || jobPriceTextField.text!.characters.count == 0 || jobDateTextField.text!.characters.count == 0{
-                bottomAddJobButton.isEnabled = false
-            }
-            else {
-                bottomAddJobButton.isEnabled = true
-            }
-        }
-        if textField == jobDateTextField
-        {
-            let oldStr = jobPriceTextField.text! as NSString
-            let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || jobTitleTextField.text!.characters.count == 0 || jobLocationTextField.text!.characters.count == 0 || jobPriceTextField.text!.characters.count == 0 || jobCategoryTextField.text!.characters.count == 0{
+            if newStr.length == 0 || jobTitleTextField.text!.characters.count == 0 || jobPriceTextField.text!.characters.count == 0 {
                 bottomAddJobButton.isEnabled = false
             }
             else {
@@ -238,26 +177,6 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
         return numberOfChars <= 300;
-    }
-    
-    //MARK: -  UIPickerViewDataSource
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickOption.count
-    }
-    
-    //MARK: - UIPickerViewDelegate
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickOption[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        jobCategoryTextField.text = pickOption[row]
     }
     
     /*
