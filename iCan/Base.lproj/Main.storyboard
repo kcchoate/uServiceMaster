@@ -983,6 +983,9 @@
                                 <state key="normal" title="Create">
                                     <color key="titleColor" red="0.87450980389999999" green="0.8980392157" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="createButtonPressed" destination="shE-iX-YEi" eventType="touchUpInside" id="kQs-Jh-ezk"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Nh-6d-OsN">
                                 <rect key="frame" x="47" y="602" width="280" height="45"/>
@@ -1105,6 +1108,15 @@
                             <constraint firstItem="3s2-nU-pIR" firstAttribute="trailing" secondItem="A6G-bv-JAi" secondAttribute="trailingMargin" id="zWI-nx-v2A"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="createButton" destination="WoT-Xq-fQq" id="klA-uI-e61"/>
+                        <outlet property="emailTextField" destination="zGP-yJ-qSb" id="OQR-IS-jEt"/>
+                        <outlet property="firstNameTextField" destination="DUN-M8-Vw3" id="hrK-pe-tiA"/>
+                        <outlet property="lastNameTextField" destination="3s2-nU-pIR" id="uu8-Nb-zaJ"/>
+                        <outlet property="passwordTextField" destination="URS-DW-mhc" id="SfN-SF-vpO"/>
+                        <outlet property="passwordVerificationTextField" destination="vA8-yu-Zdj" id="Ez5-Ok-1on"/>
+                        <outlet property="resumeTextView" destination="aQ0-xb-4n9" id="oes-ZL-Kby"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gsu-du-f9D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
