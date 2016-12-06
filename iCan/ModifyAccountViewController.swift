@@ -96,6 +96,9 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
         }
         //TODO: - Send updated information 
     }
+    @IBAction func backButtonPressed() {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
     
     
     
@@ -104,7 +107,7 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     func presentErrorNotification(errorTitle: String, errorMessage: String) {
         let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (alert: UIAlertAction!)  in
-            self.performSegue(withIdentifier: "backUserAccount", sender: self)
+            _ = self.navigationController?.popViewController(animated: true)
         }))
         
         present(ac, animated: true)
