@@ -30,6 +30,7 @@
 		0DE015A21D9B4700001C3EFF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DE015A01D9B4700001C3EFF /* Main.storyboard */; };
 		0DE015A41D9B4700001C3EFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DE015A31D9B4700001C3EFF /* Assets.xcassets */; };
 		0DE015A71D9B4700001C3EFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0DE015A51D9B4700001C3EFF /* LaunchScreen.storyboard */; };
+		2F36745B1DF6506300BE52BD /* ModifyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F36745A1DF6506300BE52BD /* ModifyAccountViewController.swift */; };
 		2F99BCAE1DE5EB2B009B0C05 /* JobApplicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */; };
 		2F99BCB21DE5FB43009B0C05 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F99BCB11DE5FB43009B0C05 /* CreateAccountViewController.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +61,7 @@
 		0DE015A31D9B4700001C3EFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0DE015A61D9B4700001C3EFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0DE015A81D9B4700001C3EFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F36745A1DF6506300BE52BD /* ModifyAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyAccountViewController.swift; sourceTree = "<group>"; };
 		2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobApplicationViewController.swift; sourceTree = "<group>"; };
 		2F99BCB11DE5FB43009B0C05 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -111,6 +113,7 @@
 				2F99BCAD1DE5EB2B009B0C05 /* JobApplicationViewController.swift */,
 				0DA5178C1DF4A4DF004591FC /* LoggedInNavigationController.swift */,
 				0D9DF6501DB82F320010FCD3 /* LoginViewController.swift */,
+				2F36745A1DF6506300BE52BD /* ModifyAccountViewController.swift */,
 				0DA517901DF4D753004591FC /* MyApplicationsTableViewController.swift */,
 				0DA5178E1DF4C6AB004591FC /* MyJobsTableViewController.swift */,
 				0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */,
@@ -228,6 +231,7 @@
 				0DA517911DF4D753004591FC /* MyApplicationsTableViewController.swift in Sources */,
 				0DA517891DF49D29004591FC /* TabBarController.swift in Sources */,
 				0DABCC301DB5E1B4003B333D /* CurrencyField.swift in Sources */,
+				2F36745B1DF6506300BE52BD /* ModifyAccountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
