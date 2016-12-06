@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 
 class CreateAccountViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate {
-
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordVerificationTextField: UITextField!
@@ -19,9 +19,13 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
     @IBOutlet weak var resumeTextView: UITextView!
     @IBOutlet weak var createButton: UIButton!
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
-    
+    var backgroundGrey: UIColor? = nil
+    let locationManager = CLLocationManager()
+    var locationLongitude: CLLocationDegrees = 0
+    var locationLatitude: CLLocationDegrees = 0
     
     override func viewDidLoad() {
+        backgroundGrey = passwordTextField.backgroundColor
         super.viewDidLoad()
         createButton.isEnabled = false
         emailTextField.delegate = self
@@ -30,11 +34,10 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         firstNameTextField.delegate = self
         lastNameTextField.delegate = self
         resumeTextView.delegate = self
-        
-        let locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
         // setting up toolbars for text entry
         
         let emailCloseToolBar = UIToolbar()
@@ -109,8 +112,10 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         resumeCloseToolBar.isUserInteractionEnabled = true
         resumeTextView.inputAccessoryView = resumeCloseToolBar
         
+        locationManager.requestWhenInUseAuthorization()
+        self.hideKeyboardWhenTappedAround()
     }
-
+    
     func emailOKClicked() {
         emailTextField.resignFirstResponder()
         passwordTextField.becomeFirstResponder()
@@ -159,15 +164,49 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         resumeTextView.resignFirstResponder()
     }
     
+    
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     @IBAction func createButtonPressed() {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.minimumFractionDigits = 1
+        numberFormatter.maximumFractionDigits = 1
+        numberFormatter.minimumIntegerDigits = 2
+        numberFormatter.maximumIntegerDigits = 2
+        let savedLatitude = numberFormatter.string(from: NSNumber(value: locationLatitude))!
+        let savedLongitude = numberFormatter.string(from: NSNumber(value: locationLongitude))!
+        //TODO: - Send new user to server
+    }
+    
+    
+    
+    //a utility function for presenting an error notification to the user
+    func presentErrorNotification(errorTitle: String, errorMessage: String) {
+        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (alert: UIAlertAction!)  in
+            self.performSegue(withIdentifier: "backToLoginSegue", sender: self)
+        }))
+        
+        present(ac, animated: true)
     }
     
     //MARK: - UITextFieldDelegate
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+        {
+            createButton.isEnabled = false
+        }
+        else {
+            createButton.isEnabled = true
+        }
+        
+    }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // The next five if statements test the textfields for text to verify that all fields have text in them each time the text field is changed. If any don't have text, the addJobButton is disabled
         
@@ -175,7 +214,8 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         {
             let oldStr = emailTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || passwordTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || resumeTextView.text!.characters.count == 0{
+            if newStr.length == 0 || passwordTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+            {
                 createButton.isEnabled = false
             }
             else {
@@ -186,29 +226,52 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         {
             let oldStr = passwordTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || resumeTextView.text!.characters.count == 0{
+            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+            {
                 createButton.isEnabled = false
             }
             else {
                 createButton.isEnabled = true
             }
+            if newStr as? String != passwordVerificationTextField.text! && passwordVerificationTextField.text!.characters.count > 0 {
+                passwordTextField.backgroundColor = UIColor.red
+                passwordVerificationTextField.backgroundColor = UIColor.red
+            }
+            else {
+                
+                passwordTextField.backgroundColor = backgroundGrey
+                passwordVerificationTextField.backgroundColor = backgroundGrey
+            }
+            
         }
         if textField == passwordVerificationTextField
         {
             let oldStr = passwordVerificationTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || resumeTextView.text!.characters.count == 0{
+            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+            {
                 createButton.isEnabled = false
             }
             else {
                 createButton.isEnabled = true
+            }
+            if newStr as? String != passwordTextField.text! {
+                passwordTextField.backgroundColor = UIColor.red
+                passwordVerificationTextField.backgroundColor = UIColor.red
+            }
+            else {
+                
+                passwordTextField.backgroundColor = backgroundGrey
+                passwordVerificationTextField.backgroundColor = backgroundGrey
+                
             }
         }
         if textField == firstNameTextField
         {
             let oldStr = firstNameTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || resumeTextView.text!.characters.count == 0{
+            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || lastNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+            {
                 createButton.isEnabled = false
             }
             else {
@@ -219,7 +282,8 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         {
             let oldStr = lastNameTextField.text! as NSString
             let newStr = oldStr.replacingCharacters(in: range, with: string) as NSString
-            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || resumeTextView.text!.characters.count == 0{
+            if newStr.length == 0 || emailTextField.text!.characters.count == 0 || passwordTextField.text!.characters.count == 0 || passwordVerificationTextField.text!.characters.count == 0 || firstNameTextField.text!.characters.count == 0 || passwordVerificationTextField.text != passwordTextField.text
+            {
                 createButton.isEnabled = false
             }
             else {
@@ -249,35 +313,39 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         let numberOfChars = newText.characters.count
         return numberOfChars <= 280;
     }
-
+    
     //MARK: - CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        
         if status == .denied {
-            print ("denied")
-        }
-        if status == .authorizedAlways {
-            print ("authorized Always")
+            presentErrorNotification(errorTitle: "Location is needed.", errorMessage: "In order to find and post jobs in your area you will need to provide location abilities in your settings.")
+            
         }
         if status == .authorizedWhenInUse {
             print ("authorized When In Use")
         }
-        if status == .notDetermined {
-            print ("not determined")
-        }
-        if status == .restricted {
-            print ("restricted")
-        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        self.locationLatitude = location.coordinate.latitude
+        self.locationLongitude = location.coordinate.longitude
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        presentErrorNotification(errorTitle: "Error in retrieving location.", errorMessage: error.localizedDescription)
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
