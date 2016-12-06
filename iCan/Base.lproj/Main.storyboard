@@ -417,6 +417,16 @@
                                 <frame key="frameInset" minY="170" width="375" height="497"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7KM-B3-k4Y">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7KM-B3-k4Y" id="Hfy-UJ-IiO">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TITLE OF JOB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMa-X6-p2B">
                                 <frame key="frameInset" minX="16" minY="38" width="343" height="27"/>
@@ -451,6 +461,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2m3-Xi-y4A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4860" y="-1603.4482758620691"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="6Nr-vC-cch">
+            <objects>
+                <viewController id="yI7-NA-h4e" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AqE-B1-V1F"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Db-kj-ylr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yMb-JG-0cH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="arB-Gk-CP7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5665" y="-1611"/>
         </scene>
         <!--Selected Application View Controller-->
         <scene sceneID="Rwm-Hh-Ic1">
