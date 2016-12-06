@@ -7,47 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Search Screen View Controller-->
-        <scene sceneID="d5P-Nu-jhD">
-            <objects>
-                <viewController id="1n5-Zw-yQL" customClass="SearchScreenViewController" customModule="uService" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="umJ-vu-ZM0"/>
-                        <viewControllerLayoutGuide type="bottom" id="1zR-Qz-lid"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TW7-9e-Cgj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bj3-dz-GyK"/>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rMv-O7-90r">
-                                <frame key="frameInset" minX="47" minY="72" width="280" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.24313725489999999" green="0.53725490200000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                                <state key="normal" title="Filter Jobs">
-                                    <color key="titleColor" red="0.87450980389999999" green="0.8980392157" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.58823529409999997" green="0.87843137250000003" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="bj3-dz-GyK" secondAttribute="trailing" id="WWW-DI-W0H"/>
-                            <constraint firstItem="bj3-dz-GyK" firstAttribute="leading" secondItem="TW7-9e-Cgj" secondAttribute="leading" id="Zt2-4Y-Ecw"/>
-                            <constraint firstItem="1zR-Qz-lid" firstAttribute="top" secondItem="bj3-dz-GyK" secondAttribute="bottom" id="o4b-A4-ade"/>
-                            <constraint firstItem="bj3-dz-GyK" firstAttribute="top" secondItem="umJ-vu-ZM0" secondAttribute="bottom" constant="88" id="p0y-Xd-sob"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="aJI-jS-10D"/>
-                    <connections>
-                        <outlet property="mapView" destination="bj3-dz-GyK" id="M4y-Uc-jlM"/>
-                        <segue destination="PXy-Im-m9F" kind="show" identifier="detailsDiscloserPressed" id="9Wg-id-cvg"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hoY-cp-9Vo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4770" y="81"/>
-        </scene>
         <!--Available Jobs-->
         <scene sceneID="jzI-9t-Whc">
             <objects>
@@ -152,7 +111,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vK5-zo-bPa">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vK5-zo-bPa">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="375" id="7lZ-Nz-DEv"/>
                                     <constraint firstAttribute="height" constant="317" id="mkh-Y5-SsC"/>
@@ -209,6 +168,7 @@
                         <outlet property="detailsTextView" destination="VZV-zC-gHo" id="7Wv-WM-u2r"/>
                         <outlet property="dueByTextView" destination="Zqy-Wr-wTn" id="iG9-ba-3d8"/>
                         <outlet property="jobDateTextView" destination="rfo-Fs-MZH" id="kfW-fG-urs"/>
+                        <outlet property="jobLocationMapView" destination="vK5-zo-bPa" id="Ak7-5G-YBo"/>
                         <outlet property="paymentTextView" destination="HiM-ef-oVN" id="UPQ-gd-CMM"/>
                     </connections>
                 </viewController>
@@ -1162,7 +1122,4 @@
         <image name="Search Property-30.png" width="30" height="30"/>
         <image name="Settings-30.png" width="30" height="30"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="9Wg-id-cvg"/>
-    </inferredMetricsTieBreakers>
 </document>

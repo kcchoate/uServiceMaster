@@ -20,7 +20,6 @@
 		0DC77DD71DF4EE4300B481D6 /* PostedJobsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC77DD61DF4EE4300B481D6 /* PostedJobsTableViewController.swift */; };
 		0DC77DDD1DF5038C00B481D6 /* SelectedApplicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC77DDC1DF5038C00B481D6 /* SelectedApplicationViewController.swift */; };
 		0DD272631DCBA2B2001AC3A0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DD272621DCBA2B2001AC3A0 /* MapKit.framework */; };
-		0DD272651DCBA2C4001AC3A0 /* SearchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */; };
 		0DDB3D571DCBEB2100247EA9 /* Currency Filled-30.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DDB3D511DCBEB2100247EA9 /* Currency Filled-30.png */; };
 		0DDB3D581DCBEB2100247EA9 /* Grey_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DDB3D521DCBEB2100247EA9 /* Grey_icon.png */; };
 		0DDB3D591DCBEB2100247EA9 /* Home-30.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DDB3D531DCBEB2100247EA9 /* Home-30.png */; };
@@ -51,7 +50,6 @@
 		0DC77DD61DF4EE4300B481D6 /* PostedJobsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostedJobsTableViewController.swift; sourceTree = "<group>"; };
 		0DC77DDC1DF5038C00B481D6 /* SelectedApplicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedApplicationViewController.swift; sourceTree = "<group>"; };
 		0DD272621DCBA2B2001AC3A0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchScreenViewController.swift; sourceTree = "<group>"; };
 		0DDB3D511DCBEB2100247EA9 /* Currency Filled-30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Currency Filled-30.png"; path = "Assets.xcassets/Currency Filled-30.png"; sourceTree = "<group>"; };
 		0DDB3D521DCBEB2100247EA9 /* Grey_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey_icon.png; path = Assets.xcassets/Grey_icon.png; sourceTree = "<group>"; };
 		0DDB3D531DCBEB2100247EA9 /* Home-30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Home-30.png"; path = "Assets.xcassets/Home-30.png"; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 				0DABCC2F1DB5E1B4003B333D /* NewJobViewController.swift */,
 				0DC77DD61DF4EE4300B481D6 /* PostedJobsTableViewController.swift */,
 				0D7C0F4F1DF76F56009FCE1E /* ResumeViewController.swift */,
-				0DD272641DCBA2C4001AC3A0 /* SearchScreenViewController.swift */,
 				0DC77DDC1DF5038C00B481D6 /* SelectedApplicationViewController.swift */,
 				0DA517881DF49D29004591FC /* TabBarController.swift */,
 				0D9DF6541DB838EE0010FCD3 /* UserViewController.swift */,
@@ -224,7 +221,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DC77DD71DF4EE4300B481D6 /* PostedJobsTableViewController.swift in Sources */,
-				0DD272651DCBA2C4001AC3A0 /* SearchScreenViewController.swift in Sources */,
 				0D9DF6551DB838EE0010FCD3 /* UserViewController.swift in Sources */,
 				0DA5178F1DF4C6AB004591FC /* MyJobsTableViewController.swift in Sources */,
 				2F99BCB21DE5FB43009B0C05 /* CreateAccountViewController.swift in Sources */,

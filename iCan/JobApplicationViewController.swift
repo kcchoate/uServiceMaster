@@ -7,27 +7,43 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
-class JobApplicationViewController: UIViewController {
-    var selectedJob = Job()
-    
+class JobApplicationViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var dueByTextView: UITextView!
     @IBOutlet weak var paymentTextView: UITextView!
     @IBOutlet weak var jobDateTextView: UITextView!
     @IBOutlet weak var detailsTextView: UITextView!
+    @IBOutlet weak var jobLocationMapView: MKMapView!
+    var selectedJob: Job? = nil
+    let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        jobLocationMapView.delegate = self
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         let currencyFormatter = NumberFormatter()
         currencyFormatter.locale = Locale(identifier: "en-US")
         currencyFormatter.numberStyle = .currency
-        dueByTextView.text! = dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob.dueDate))
-        paymentTextView.text! = currencyFormatter.string(from: NSNumber(value: selectedJob.pay))!
-        jobDateTextView.text! = dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob.date))
-        detailsTextView.text! = selectedJob.description
+        dueByTextView.text! = dateFormatter.string(from: Date(timeIntervalSince1970: (selectedJob?.dueDate)!))
+        paymentTextView.text! = currencyFormatter.string(from: NSNumber(value: (selectedJob?.pay)!))!
+        jobDateTextView.text! = dateFormatter.string(from: Date(timeIntervalSince1970: (selectedJob?.date)!))
+        detailsTextView.text! = (selectedJob?.description)!
+        
+        let regionRadius: CLLocationDistance = 50000.0
+        let jobLat = Double((selectedJob?.latitude)!)!
+        let jobLong = Double((selectedJob?.longitude)!)!
+        let jobLocation = CLLocationCoordinate2D(latitude: jobLat, longitude: jobLong)
+        let jobRegion = MKCoordinateRegionMakeWithDistance(jobLocation, regionRadius, regionRadius)
+        let jobAnnotation = MKPointAnnotation()
+        jobAnnotation.coordinate = jobLocation
+        jobLocationMapView.addAnnotation(jobAnnotation)
+        jobLocationMapView.setRegion(jobRegion, animated: true)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,15 +55,11 @@ class JobApplicationViewController: UIViewController {
     @IBAction func applyForJobPressed() {
         //TODO: - Send application to job to server 
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationView = MKPinAnnotationView()
+        annotationView.pinTintColor = colorDarkGreen
+        return annotationView
     }
-    */
-
+    
 }

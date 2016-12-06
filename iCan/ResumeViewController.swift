@@ -6,6 +6,8 @@
 //  Copyright © 2016 Kendrick Choate. All rights reserved.
 //
 
+//TODO: - Add info from cell selection into this page
+
 import UIKit
 
 class ResumeViewController: UIViewController {
