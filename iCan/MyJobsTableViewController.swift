@@ -59,7 +59,6 @@ class MyJobsTableViewController: UITableViewController {
         //TODO: Uncomment next line once UIDs have been updated from base64 to email addresses
         //let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!\
         let requestURL: URL = URL(string: "\(amazonKey)ireMURxJ")!
-        print ((loggedInUser?.uid)!)
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
@@ -78,7 +77,7 @@ class MyJobsTableViewController: UITableViewController {
                 let parsedData = data["data"] as! NSArray
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .medium
-                dateFormatter.dateFormat = "MM/DD/YYYY"
+                dateFormatter.dateFormat = "MM/dd/yyyy"
                 let numberFormatter = NumberFormatter()
                 numberFormatter.locale = Locale(identifier: "en-US")
                 numberFormatter.numberStyle = .currency
@@ -89,14 +88,23 @@ class MyJobsTableViewController: UITableViewController {
                         let properties = attributes["properties"] as! [String:Any]
                         let tempJobJID = tempJob["jid"] as! String
                         let tempJobDate = attributes["date"] as! Double
-                        let tempJobTitle = properties["title"] as! String
                         let tempJobLong = attributes["longitude"] as! Double
                         let tempJobLat = attributes["latitude"] as! Double
                         let tempJobPay = attributes["pay"] as! String
-                        let tempJobDescription = properties["description"] as! String
-                        let tempJobDueDate = properties["dueDate"] as! String
-                        let tempJobDueDateFromApexTime = dateFormatter.date(from: tempJobDueDate)?.timeIntervalSince1970
-                        let jobListing = Job(JID: tempJobJID, Title: tempJobTitle, Longitude: tempJobLong, Latitude: tempJobLat, Pay: Float(tempJobPay)!, Description: tempJobDescription, DueDate: tempJobDueDateFromApexTime!, PostDate: tempJobDate)
+                        var tempJobTitle = properties["title"] as? String
+                        if tempJobTitle == nil {
+                            tempJobTitle = ""
+                        }
+                        var tempJobDescription = properties["description"] as? String
+                        if tempJobDescription == nil {
+                            tempJobDescription = ""
+                        }
+                        var tempJobDueDate = properties["dueDate"] as? String
+                        if tempJobDueDate == nil {
+                            tempJobDueDate = "12/25/2016"
+                        }
+                        let tempJobDueDateFromApexTime = dateFormatter.date(from: tempJobDueDate!)?.timeIntervalSince1970
+                        let jobListing = Job(JID: tempJobJID, Title: tempJobTitle!, Longitude: tempJobLong, Latitude: tempJobLat, Pay: Float(tempJobPay)!, Description: tempJobDescription!, DueDate: tempJobDueDateFromApexTime!, PostDate: tempJobDate)
                         self.listOfJobs.append(jobListing)
                     }
                     self.tableView.reloadData()

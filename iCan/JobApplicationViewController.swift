@@ -25,7 +25,7 @@ class JobApplicationViewController: UIViewController, MKMapViewDelegate {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
+        dateFormatter.timeStyle = .none
         let currencyFormatter = NumberFormatter()
         currencyFormatter.locale = Locale(identifier: "en-US")
         currencyFormatter.numberStyle = .currency

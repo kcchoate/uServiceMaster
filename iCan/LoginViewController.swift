@@ -97,7 +97,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func testLogin(userName: String, password: String) {
         //TODO: - Uncomment the next line once ready to enable actual log in functionality (leaving hardcoded for further testing)
         // correct url: let requestURL: URL = URL(string: amazonKey + "users?uid=" + userName + "&password=" + password)!
-        let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/users?uid=ireMURxJ&password=password1")!
+        let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/users?uid=ireMURxJ&password=password")!
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
@@ -114,7 +114,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         do {
             let parsedData = try JSONSerialization.jsonObject(with: responseData, options: []) as! [String:Any]
             let data = parsedData["data"] as! [String:Any]
-            print ("data: \(data.count)")
             if (data.count > 0) {
                 DispatchQueue.main.async {
                     let attributes = data["attributes"] as! [String:Any]

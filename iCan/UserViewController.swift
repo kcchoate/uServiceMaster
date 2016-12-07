@@ -52,6 +52,10 @@ class UserViewController: UIViewController {
             let secondVC = segue.destination as! MyJobsTableViewController
             secondVC.loggedInUser = self.loggedInUser
         }
+        if segue.identifier == "viewMyApplications" {
+            let secondVC = segue.destination as! MyApplicationsTableViewController
+            secondVC.loggedInUser = self.loggedInUser
+        }
     }
     
 }

@@ -100,7 +100,7 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
             let nextVC = segue.destination as! ResumeViewController
             nextVC.selectedJob = self.selectedJob
             nextVC.selectedApplicant = listOfApplicants[selectedCell]
-            nextVC.title = listOfApplicants[selectedCell].id
+            nextVC.title = selectedJob?.title
         }
     }
 

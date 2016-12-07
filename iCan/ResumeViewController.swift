@@ -11,11 +11,18 @@
 import UIKit
 
 class ResumeViewController: UIViewController {
+    
+    
+    @IBOutlet weak var emailTextView: UITextView!
+    @IBOutlet weak var resumeTextView: UITextView!
+    
     var selectedApplicant: Applicant? = nil
     var selectedJob: Job? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        emailTextView.text = selectedApplicant?.id
+        resumeTextView.text = selectedApplicant?.resume
         // Do any additional setup after loading the view.
     }
 
@@ -24,6 +31,9 @@ class ResumeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func acceptPressed() {
+        
+    }
 
     /*
     // MARK: - Navigation
