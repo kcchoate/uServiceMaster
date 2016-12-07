@@ -114,11 +114,12 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         let todaysDate = Date()
         let datePicker = UIDatePicker()
         datePicker.minimumDate = todaysDate
+        datePicker.datePickerMode = .date
         datePicker.maximumDate = todaysDate.addingTimeInterval(31536000) // a year from the current date
         datePicker.setDate(todaysDate, animated: true)
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
         jobDateTextField.text = formatter.string(from: todaysDate)
         jobDateTextField.inputView = datePicker
         datePicker.addTarget(self, action: #selector(datePickerChanged(sender:)), for: .valueChanged)
@@ -127,8 +128,8 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     func datePickerChanged(sender: UIDatePicker) {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
         jobDateTextField.text = formatter.string(from: sender.date)
     }
     
@@ -196,7 +197,7 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         let numberOfChars = newText.characters.count
-        return numberOfChars <= 300;
+        return numberOfChars <= 280;
     }
     
     /*
