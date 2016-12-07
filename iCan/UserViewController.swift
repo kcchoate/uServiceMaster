@@ -15,7 +15,7 @@ class UserViewController: UIViewController {
     var userState = "..."
     override func viewDidLoad() {
         super.viewDidLoad()
-        let userLocation = CLLocation(latitude: Double((loggedInUser?.lat)!)!, longitude: Double((loggedInUser?.long)!)!)
+        let userLocation = CLLocation(latitude: (loggedInUser?.lat)!, longitude: (loggedInUser?.long)!)
         DispatchQueue.main.async {
             self.geocoder.reverseGeocodeLocation(userLocation, completionHandler: { (placemarks, error) -> Void in
                 let placemark = placemarks?[0]

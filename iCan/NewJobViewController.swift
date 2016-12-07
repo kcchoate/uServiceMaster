@@ -11,13 +11,13 @@ protocol NewJobDelegate {
 class NewJob {
     var owner: String
     var title: String
-    var latitude: String
-    var longitude: String
+    var latitude: Double
+    var longitude: Double
     var pay: Float
     var description: String
     var dueDate: Double
     var date: Double
-    init (newOwner: String, newTitle: String, newLongitude: String, newLatitude: String, newPay: Float, newDescription: String, newDueDate: Double, newDate: Double) {
+    init (newOwner: String, newTitle: String, newLongitude: Double, newLatitude: Double, newPay: Float, newDescription: String, newDueDate: Double, newDate: Double) {
         //date, pay, title, description, duedate
         owner = newOwner
         title = newTitle
@@ -32,8 +32,8 @@ class NewJob {
         //default constructor used for testing
         owner = "Test job"
         title = "Test job"
-        longitude = "0"
-        latitude = "0"
+        longitude = 0
+        latitude = 0
         pay = 0
         description = "Test job"
         dueDate = 0

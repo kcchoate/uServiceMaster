@@ -501,6 +501,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JI5-IW-2YM"/>
                         </subviews>
                         <color key="backgroundColor" red="0.58823529409999997" green="0.87843137250000003" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -512,6 +513,7 @@
                             <constraint firstItem="LXV-dQ-scJ" firstAttribute="leading" secondItem="KzP-oU-dns" secondAttribute="leadingMargin" id="9XQ-AE-PIq"/>
                             <constraint firstItem="3kg-7c-xZJ" firstAttribute="leading" secondItem="KzP-oU-dns" secondAttribute="leadingMargin" id="AWq-pL-g1k"/>
                             <constraint firstItem="3kg-7c-xZJ" firstAttribute="top" secondItem="ZYs-l1-HAN" secondAttribute="bottom" constant="14" id="Atf-g6-Isl"/>
+                            <constraint firstItem="JI5-IW-2YM" firstAttribute="leading" secondItem="KzP-oU-dns" secondAttribute="leading" id="EZI-6g-h8U"/>
                             <constraint firstItem="0k4-Ng-RRj" firstAttribute="leading" secondItem="vNr-pz-M7m" secondAttribute="trailing" constant="37" id="U9Q-5B-kcq"/>
                             <constraint firstItem="0k4-Ng-RRj" firstAttribute="top" secondItem="oP3-fr-ZNT" secondAttribute="bottom" constant="8" id="UVk-Ib-Nad"/>
                             <constraint firstItem="Moh-bC-keY" firstAttribute="leading" secondItem="3kg-7c-xZJ" secondAttribute="trailing" constant="22" id="VHh-c0-oUq"/>
@@ -521,12 +523,16 @@
                             <constraint firstItem="oP3-fr-ZNT" firstAttribute="trailing" secondItem="KzP-oU-dns" secondAttribute="trailingMargin" id="nbg-Bf-8B6"/>
                             <constraint firstItem="0k4-Ng-RRj" firstAttribute="trailing" secondItem="KzP-oU-dns" secondAttribute="trailingMargin" id="pGo-NW-Phs"/>
                             <constraint firstItem="Moh-bC-keY" firstAttribute="top" secondItem="ZYs-l1-HAN" secondAttribute="bottom" constant="8" id="pHj-CP-c0H"/>
+                            <constraint firstItem="7oQ-aB-qCr" firstAttribute="top" secondItem="JI5-IW-2YM" secondAttribute="bottom" id="rJQ-Gm-wJ9"/>
+                            <constraint firstItem="JI5-IW-2YM" firstAttribute="top" secondItem="0k4-Ng-RRj" secondAttribute="bottom" constant="35" id="vQj-nK-96e"/>
                             <constraint firstItem="YSZ-Yl-ul1" firstAttribute="top" secondItem="3kg-7c-xZJ" secondAttribute="bottom" constant="20" id="xqm-XZ-N5J"/>
                             <constraint firstItem="vNr-pz-M7m" firstAttribute="top" secondItem="LXV-dQ-scJ" secondAttribute="bottom" constant="49" id="zfb-rE-cRk"/>
+                            <constraint firstAttribute="trailing" secondItem="JI5-IW-2YM" secondAttribute="trailing" id="znE-jJ-wWg"/>
                             <constraint firstItem="oP3-fr-ZNT" firstAttribute="leading" secondItem="LXV-dQ-scJ" secondAttribute="trailing" constant="35" id="znU-ds-tmO"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="applicationMapView" destination="JI5-IW-2YM" id="tWd-8L-qud"/>
                         <outlet property="detailsTextView" destination="0k4-Ng-RRj" id="A9p-K7-smN"/>
                         <outlet property="dueByTextView" destination="oP3-fr-ZNT" id="aF8-pb-7Rg"/>
                         <outlet property="paymentTextView" destination="Moh-bC-keY" id="Y33-ZH-X7V"/>
@@ -535,7 +541,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v6a-c4-FiR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4860" y="-664"/>
+            <point key="canvasLocation" x="4860" y="-664.31784107946032"/>
         </scene>
         <!--New Job-->
         <scene sceneID="2NS-dR-AAZ">

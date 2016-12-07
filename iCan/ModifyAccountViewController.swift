@@ -24,8 +24,8 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     let locationManager = CLLocationManager()
     var newLocationLongitude: CLLocationDegrees = 0
     var newLocationLatitude: CLLocationDegrees = 0
-    var updatedLongitude = "0"
-    var updatedLatitude = "0"
+    var updatedLongitude: Double = 0
+    var updatedLatitude: Double = 0
     var locationUpdated: Bool = false
     
     
@@ -58,8 +58,8 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
             numberFormatter.maximumFractionDigits = 1
             numberFormatter.minimumIntegerDigits = 2
             numberFormatter.maximumIntegerDigits = 2
-            updatedLatitude = numberFormatter.string(from: NSNumber(value: newLocationLatitude))!
-            updatedLongitude = numberFormatter.string(from: NSNumber(value: newLocationLongitude))!
+            updatedLatitude = newLocationLatitude
+            updatedLongitude = newLocationLongitude
             
             if (newPasswordTextField.text! != confirmPasswordTextField.text!) {
                 updateButton.isEnabled = false
@@ -81,8 +81,8 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     
     @IBAction func updateButtonPressed() {
         var newPassword: String? = nil
-        var newLong: String? = nil
-        var newLat: String? = nil
+        var newLong: Double? = nil
+        var newLat: Double? = nil
         var newResume: String? = nil
         if (newPasswordTextField.text! == confirmPasswordTextField.text! && newPasswordTextField.text!.characters.count > 0) {
             newPassword = newPasswordTextField.text!

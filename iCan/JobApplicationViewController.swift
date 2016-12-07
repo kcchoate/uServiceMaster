@@ -35,8 +35,8 @@ class JobApplicationViewController: UIViewController, MKMapViewDelegate {
         detailsTextView.text! = (selectedJob?.description)!
         
         let regionRadius: CLLocationDistance = 50000.0
-        let jobLat = Double((selectedJob?.latitude)!)!
-        let jobLong = Double((selectedJob?.longitude)!)!
+        let jobLat = (selectedJob?.latitude)!
+        let jobLong = (selectedJob?.longitude)!
         let jobLocation = CLLocationCoordinate2D(latitude: jobLat, longitude: jobLong)
         let jobRegion = MKCoordinateRegionMakeWithDistance(jobLocation, regionRadius, regionRadius)
         let jobAnnotation = MKPointAnnotation()
