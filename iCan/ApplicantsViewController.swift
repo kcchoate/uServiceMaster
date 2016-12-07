@@ -28,7 +28,10 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var datePostedLabel: UILabel!
     @IBOutlet weak var applicantTableView: UITableView!
     
+    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/applications?owner="
+    
     var selectedJob: Job? = nil
+    var loggedInUser: LoggedInUser? = nil
     var listOfApplicants: [Applicant] = []
     var selectedCell = 0
     let numberFormatter = NumberFormatter()
@@ -47,14 +50,64 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
         datePostedLabel.text! = "Date posted: \(dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob!.date)))"
         jobDueByLabel.text! = "Due by: \(dateFormatter.string(from: Date(timeIntervalSince1970: selectedJob!.dueDate)))"
         jobPayLabel.text! = "Job cost: \(numberFormatter.string(from: NSNumber(value: selectedJob!.pay))!)"
-        
-        //TODO: - Connect to server to pull applicant info
-        let applicant1 = Applicant(aid: "test", applicantResume: "test resume")
-        let applicant2 = Applicant()
-        listOfApplicants.append(applicant1)
-        listOfApplicants.append(applicant2)
+        updateApplicantList()
     }
 
+    func updateApplicantList() {
+        //TODO: Uncomment next line once UIDs have been updated from base64 to email addresses
+        //let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!
+        let requestURL: URL = URL(string: "\(amazonKey)ireMURxJ")!
+        let urlRequest: URLRequest = URLRequest(url: requestURL)
+        let session = URLSession.shared
+        let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+            //do stuff with response, data, and error here
+            guard error == nil else {
+                print ("error calling GET")
+                print (error)
+                return
+            }
+            guard let responseData = data else {
+                print ("Error: did not receive data")
+                return
+            }
+            do {
+                let data = try JSONSerialization.jsonObject(with: responseData, options: []) as! [String:Any]
+                let parsedData = data["data"] as! NSArray
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .medium
+                dateFormatter.timeStyle = .none
+                dateFormatter.dateFormat = "MM/dd/yyyy"
+                let numberFormatter = NumberFormatter()
+                numberFormatter.locale = Locale(identifier: "en-US")
+                numberFormatter.numberStyle = .currency
+                DispatchQueue.main.async {
+                    for application in parsedData {
+                        let tempApplication = application as! [String:Any]
+                        let attributes = tempApplication["attributes"] as! [String:Any]
+                        let applicantID = attributes["applicant"] as! String
+                        let jobID = attributes["jid"] as! String
+                        //TODO: have resumes added to applicant list.
+                        if (jobID == self.selectedJob?.jid)
+                        {
+                            let applicant = Applicant(aid: applicantID, applicantResume: "test resume")
+                            self.listOfApplicants.append(applicant)
+                        }
+                    }
+                    self.applicantTableView.reloadData()
+                }
+                
+                
+            }
+            catch {
+                print ("Error trying to convert data to json")
+                return
+            }
+            
+        })
+        task.resume()
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

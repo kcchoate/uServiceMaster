@@ -183,23 +183,6 @@ class MyJobsTableViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -211,6 +194,7 @@ class MyJobsTableViewController: UITableViewController {
             let nextVC = segue.destination as! ApplicantsViewController
             nextVC.selectedJob = listOfJobs[selectedCell]
             nextVC.title = listOfJobs[selectedCell].title
+            nextVC.loggedInUser = self.loggedInUser!
         }
     }
 

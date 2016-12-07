@@ -173,13 +173,7 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         // Dispose of any resources that can be recreated.
     }
     @IBAction func createButtonPressed() {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.minimumFractionDigits = 1
-        numberFormatter.maximumFractionDigits = 1
-        numberFormatter.minimumIntegerDigits = 2
-        numberFormatter.maximumIntegerDigits = 2
-        let savedLatitude = numberFormatter.string(from: NSNumber(value: locationLatitude))!
-        let savedLongitude = numberFormatter.string(from: NSNumber(value: locationLongitude))!
+        //locationLongitude, locationLatitude
         //TODO: - Send new user to server
     }
     

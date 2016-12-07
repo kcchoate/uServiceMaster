@@ -43,7 +43,6 @@ class MyApplicationsTableViewController: UITableViewController {
             do {
                 let data = try JSONSerialization.jsonObject(with: responseData, options: []) as! [String:Any]
                 let parsedData = data["data"] as! NSArray
-                print (parsedData)
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .medium
                 dateFormatter.timeStyle = .none
