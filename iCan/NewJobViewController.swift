@@ -11,9 +11,9 @@ class NewJob {
     var longitude: Double
     var pay: Float
     var description: String
-    var dueDate: Double
+    var dueDate: String
     var date: Double
-    init (newOwner: String, newTitle: String, newLongitude: Double, newLatitude: Double, newPay: Float, newDescription: String, newDueDate: Double, newDate: Double) {
+    init (newOwner: String, newTitle: String, newLongitude: Double, newLatitude: Double, newPay: Float, newDescription: String, newDueDate: String, newDate: Double) {
         //date, pay, title, description, duedate
         owner = newOwner
         title = newTitle
@@ -32,20 +32,21 @@ class NewJob {
         latitude = 0
         pay = 0
         description = "Test job"
-        dueDate = 0
+        dueDate = "01/01/2012"
         date = 0
     }
 
 }
 
 class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
-    var loggedInUser: LoggedInUser? = nil
     @IBOutlet weak var jobTitleTextField: UITextField!
     @IBOutlet weak var jobPriceTextField: UITextField!
     @IBOutlet weak var jobDateTextField: UITextField!
     @IBOutlet weak var jobDetailsTextField: UITextView!
     @IBOutlet weak var bottomAddJobButton: UIButton!
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
+    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs"
+    var loggedInUser: LoggedInUser? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,26 +84,90 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     
     @IBAction func addNewJobButtonPressed(_ sender: AnyObject) {
-            let jobTitle = jobTitleTextField.text!
-            let jobDetails = jobDetailsTextField.text!
-            // The next lines format the price field
-            let priceField = jobPriceTextField.text!
-            let strippedPriceIndex = priceField.index(after: priceField.startIndex)
-            let jobPriceWithCommas = priceField.substring(from: strippedPriceIndex)
-            let jobPrice = Float(jobPriceWithCommas.replacingOccurrences(of: ",", with: ""))!
-            let jobLat = loggedInUser?.lat!
-            let jobLong = loggedInUser?.long!
-            // The next lines format the date field
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en_US")
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .medium
-            let dueDate = dateFormatter.date(from: jobDateTextField.text!)?.timeIntervalSince1970
-            let usersNewJob = NewJob(newOwner: (loggedInUser?.uid)!, newTitle: jobTitle, newLongitude: (loggedInUser?.long)!, newLatitude: (loggedInUser?.lat)!, newPay: jobPrice, newDescription: jobDetails, newDueDate: dueDate!, newDate: Date.init().timeIntervalSince1970)
-            //TODO: - Send usersNewJob to server
+        let jobTitle = jobTitleTextField.text!
+        let jobDetails = jobDetailsTextField.text!
+        // The next lines format the price field
+        let priceField = jobPriceTextField.text!
+        let strippedPriceIndex = priceField.index(after: priceField.startIndex)
+        let jobPriceWithCommas = priceField.substring(from: strippedPriceIndex)
+        let jobPrice = Float(jobPriceWithCommas.replacingOccurrences(of: ",", with: ""))!
+        // The next lines format the date field
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        let dueDate = dateFormatter.date(from: jobDateTextField.text!)
+        let dueDateStr = dateFormatter.string(from: dueDate!)
+        let usersNewJob = NewJob(newOwner: (loggedInUser?.uid)!, newTitle: jobTitle, newLongitude: (loggedInUser?.long)!, newLatitude: (loggedInUser?.lat)!, newPay: jobPrice, newDescription: jobDetails, newDueDate: dueDateStr, newDate: Date.init().timeIntervalSince1970)
+        
+        
+        let newJob = [
             
-            _ = navigationController?.popViewController(animated: true) // Swift 3 has changed behavior and any function that returns something that can be discarded now gives a warning when doing so. By assigning the result to _ we can get rid of the stupid warning.
+                "data": [
+                    "type": "jobs",
+                    "attributes": [
+                        "owner": usersNewJob.owner,
+                        "completed": false,
+                        "properties":
+                        [
+                            "description": usersNewJob.description,
+                            "title":usersNewJob.title,
+                            "dueDate": usersNewJob.dueDate
+                        ],
+                        "pay": String(usersNewJob.pay),
+                        "assignedTo": "null"
+                    ]
+                ]
+            
+            ] as [String: Any]
+        let jsonData = try! JSONSerialization.data(withJSONObject: newJob, options: [.prettyPrinted])
+        let requestURL: URL = URL(string: amazonKey)!
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared
+        print ("pre-task")
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+            if error != nil {
+                print("task error: " + (error?.localizedDescription)!)
+            } else {
+                do {
+                    guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
+                    
+                    guard let errors = json?["errors"] as? [[String: Any]] else { return }
+                    if errors.count > 0 {
+                        OperationQueue.main.addOperation {
+                            self.presentErrorNotification(errorTitle: "Job not sent", errorMessage: "Your job was not sent due to a network error.")
+                        }
+                        return
+                    } else {
+                        
+                    }
+                }
+            }
+        })
+        task.resume()
+        OperationQueue.main.addOperation {
+            self.presentErrorNotification(errorTitle: "Successfully Posted Job", errorMessage: "Your job has been added")
+        }
+        resetForm()
     }
+    //a utility function for presenting an error notification to the user
+    func presentErrorNotification(errorTitle: String, errorMessage: String) {
+        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
+    func resetForm() {
+        self.jobTitleTextField.text = ""
+        self.jobDateTextField.text = ""
+        self.jobPriceTextField.text = "$0.00"
+        self.jobDetailsTextField.text = ""
+    }
+    
     //The next two functions configure the JobDateTextField to open a UIDatePicker and update the text as the UIDatePicker updates
     @IBAction func JobDateTextFieldSelected(_ textField: UITextField) {
         let todaysDate = Date()
