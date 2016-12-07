@@ -91,54 +91,58 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func LoginPressed() {
-        if (usernameTextLabel.text == nil || passwordTextLabel.text == nil || usernameTextLabel.text == "" || passwordTextLabel.text == "") {
-            presentErrorNotification(errorTitle: "Invalid Login", errorMessage: "Username or password left blank.")
-        }
-        else if (testLogin(userName: usernameTextLabel.text!, password: passwordTextLabel.text!)) {
-            performSegue(withIdentifier: "LoginSuccess", sender: self)
-        }
-        else {
-            presentErrorNotification(errorTitle: "Invalid Login", errorMessage: "Your username/password combination was not recognized.")
-        }
+        testLogin(userName: usernameTextLabel.text!, password: passwordTextLabel.text!)
     }
     
-    func testLogin(userName: String, password: String) -> Bool{
-        //TODO: - test login to server.
-        /*let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs")!
-         let urlRequest: URLRequest = URLRequest(url: requestURL)
-         let session = URLSession.shared
-         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-         //do stuff with response, data, and error here
-         guard error == nil else {
-         print ("error calling GET")
-         print (error)
-         return
-         }
-         guard let responseData = data else {
-         print ("Error: did not receive data")
-         return
-         }
-         do {
-         let json = try JSONSerialization.jsonObject(with: responseData, options: []) as! NSDictionary
-         print (json)
-         print ("done")
-         }
-         catch {
-         print ("Error trying to convert data to json")
-         return
-         }
-         
-         })
-         task.resume()*/
-        //send username+password to server
-        //retrieve data
-        //check for response T or F
-        //if T: 
-            //save user info
-            //return true
-        //if F:
-            //return false
-        return true
+    func testLogin(userName: String, password: String) {
+        //TODO: - Uncomment the next line once ready to enable actual log in functionality (leaving hardcoded for further testing)
+        // correct url: let requestURL: URL = URL(string: amazonKey + "users?uid=" + userName + "&password=" + password)!
+        let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/users?uid=ireMURxJ&password=password1")!
+        let urlRequest: URLRequest = URLRequest(url: requestURL)
+        let session = URLSession.shared
+        let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+        //do stuff with response, data, and error here
+        guard error == nil else {
+            print ("error calling GET")
+            print (error)
+            return
+        }
+        guard let responseData = data else {
+            print ("Error: did not receive data")
+            return
+        }
+        do {
+            let parsedData = try JSONSerialization.jsonObject(with: responseData, options: []) as! [String:Any]
+            let data = parsedData["data"] as! [String:Any]
+            print ("data: \(data.count)")
+            if (data.count > 0) {
+                DispatchQueue.main.async {
+                    let attributes = data["attributes"] as! [String:Any]
+                    let properties = attributes["properties"] as! [String:Any]
+                    self.loggedInUser.uid = properties["email"] as? String
+                    self.loggedInUser.firstName = properties["firstname"] as? String
+                    self.loggedInUser.lastName = properties["lastname"] as? String
+                    self.loggedInUser.lat = attributes["longitude"] as? Double
+                    self.loggedInUser.long = attributes["latitude"] as? Double
+                    self.performSegue(withIdentifier: "LoginSuccess", sender: self)
+                }
+            }
+            else {
+                //we have to manually add the pop up view to the main thread to prevent an error caused by views appearing from threads other than the main one
+                OperationQueue.main.addOperation {
+                    self.presentErrorNotification(errorTitle: "Invalid login", errorMessage: "Your username/password was not recognized.")
+                }
+            }
+            
+            
+        }
+        catch {
+            print ("Error trying to convert data to json")
+            return
+        }
+        
+        })
+        task.resume()
     }
     
     //a utility function for presenting an error notification to the user

@@ -15,7 +15,8 @@ class UserViewController: UIViewController {
     var userState = "..."
     override func viewDidLoad() {
         super.viewDidLoad()
-        let userLocation = CLLocation(latitude: (loggedInUser?.lat)!, longitude: (loggedInUser?.long)!)
+        //TODO: - SWITCH LAT AND LONG BACK. SWITCHED THEM AS TEST DATA HAD IT SWITCHED
+        let userLocation = CLLocation(latitude: (loggedInUser?.long)!, longitude: (loggedInUser?.lat)!)
         DispatchQueue.main.async {
             self.geocoder.reverseGeocodeLocation(userLocation, completionHandler: { (placemarks, error) -> Void in
                 let placemark = placemarks?[0]
@@ -27,9 +28,6 @@ class UserViewController: UIViewController {
             })
         
         }
-        
-        nameLabel.text = "\((loggedInUser?.firstName)!) \((loggedInUser?.lastName)!)"
-        emailLabel.text = (loggedInUser?.email)!
         //self.navigationController?.navigationBar.isHidden = true
     }
 
@@ -48,6 +46,10 @@ class UserViewController: UIViewController {
         navigationItem.backBarButtonItem = backItem
         if segue.identifier == "userSettingsSegue" {
             let secondVC = segue.destination as! ModifyAccountViewController
+            secondVC.loggedInUser = self.loggedInUser
+        }
+        if segue.identifier == "viewMyPostedJobs" {
+            let secondVC = segue.destination as! MyJobsTableViewController
             secondVC.loggedInUser = self.loggedInUser
         }
     }

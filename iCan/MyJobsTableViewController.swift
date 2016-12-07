@@ -40,74 +40,80 @@ class Job {
     }
 }
 class MyJobsTableViewController: UITableViewController {
+    var loggedInUser: LoggedInUser? = nil
     var selectedCell: Int = 0
     var listOfJobs: [Job] = []
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
+    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs?owner="
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.separatorStyle = .singleLine
         self.tableView.separatorColor = colorDarkGreen
-        
-        let job1 = Job(JID: "ABC", Title: "Houston Job", Longitude: -95.4, Latitude: 29.8, Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
-        let job2 = Job(JID: "ABC", Title: "Seattle Job", Longitude: -122.3, Latitude: 47.6, Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
-        let job3 = Job(JID: "ABC", Title: "New York Job", Longitude: -74.0, Latitude: 40.7, Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
-        let job4 = Job(JID: "ABC", Title: "Raleigh Job", Longitude: -78.6, Latitude: -78.6, Pay: 20.00, Description: "Test description", DueDate: 1479423103, PostDate: 1479423103)
-        listOfJobs.append(job1)
-        listOfJobs.append(job2)
-        listOfJobs.append(job3)
-        listOfJobs.append(job4)
-        //TODO: - Pull all jobs from the server and populate them into the list of jobs (use dispatch.async. See: )
-        /*      let requestURL: URL = URL(string: "http://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&units=imperial&appid=0e2a60aad888c1b78b8e73acaf987b57")!
-                let urlRequest: URLRequest = URLRequest(url: requestURL)
-                let session = URLSession.shared
-              let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-                guard error == nil else {
-                print ("Error calling GET")
-                print (error)
-                return
-                }
-                guard let responseData = data else {
-                print ("Error: did not receive data")
-                return
-                }
-                do {
-                let json = try JSONSerialization.jsonObject(with: responseData, options: []) as! NSDictionary
-                print (json)
-                let tempCloudArray = json["weather"] as! NSArray
-                let tempCloudDict = tempCloudArray[0] as! NSDictionary
-                let tempCloud = tempCloudDict["description"] as! String
-                self.cloud = tempCloud
-                let tempDict = json["main"] as! NSDictionary
-                let tempTemp = tempDict["temp"] as! Double
-                self.temp = "\(tempTemp) F"
-                let tempHumidity = tempDict["humidity"] as! Double
-                self.humidity = "\(tempHumidity)%"
-                let tempWindDict = json["wind"] as! NSDictionary
-                let tempWind = tempWindDict["speed"] as! Double
-                self.wind = "\(tempWind) mph"
- 
-                DispatchQueue.main.async {
-                self.tempLabel.text = self.temp
-                self.humidityLabel.text = self.humidity
-                self.windSpeedLabel.text = self.wind
-                self.cloudLabel.text = self.cloud
-                }
- 
-                }
-                catch {
-                print ("Error trying to convert data to json")
-                return
-                }
-                })
-                task.resume()
-            */
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         self.editButtonItem.title = "Delete"
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        updateJobList()
     }
 
+    func updateJobList() {
+        //TODO: Uncomment next line once UIDs have been updated from base64 to email addresses
+        //let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!\
+        let requestURL: URL = URL(string: "\(amazonKey)ireMURxJ")!
+        print ((loggedInUser?.uid)!)
+        let urlRequest: URLRequest = URLRequest(url: requestURL)
+        let session = URLSession.shared
+        let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
+            //do stuff with response, data, and error here
+            guard error == nil else {
+                print ("error calling GET")
+                print (error)
+                return
+            }
+            guard let responseData = data else {
+                print ("Error: did not receive data")
+                return
+            }
+            do {
+                let data = try JSONSerialization.jsonObject(with: responseData, options: []) as! [String:Any]
+                let parsedData = data["data"] as! NSArray
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateStyle = .medium
+                dateFormatter.dateFormat = "MM/DD/YYYY"
+                let numberFormatter = NumberFormatter()
+                numberFormatter.locale = Locale(identifier: "en-US")
+                numberFormatter.numberStyle = .currency
+                DispatchQueue.main.async {
+                    for job in parsedData {
+                        let tempJob = job as! [String:Any]
+                        let attributes = tempJob["attributes"] as! [String:Any]
+                        let properties = attributes["properties"] as! [String:Any]
+                        let tempJobJID = tempJob["jid"] as! String
+                        let tempJobDate = attributes["date"] as! Double
+                        let tempJobTitle = properties["title"] as! String
+                        let tempJobLong = attributes["longitude"] as! Double
+                        let tempJobLat = attributes["latitude"] as! Double
+                        let tempJobPay = attributes["pay"] as! String
+                        let tempJobDescription = properties["description"] as! String
+                        let tempJobDueDate = properties["dueDate"] as! String
+                        let tempJobDueDateFromApexTime = dateFormatter.date(from: tempJobDueDate)?.timeIntervalSince1970
+                        let jobListing = Job(JID: tempJobJID, Title: tempJobTitle, Longitude: tempJobLong, Latitude: tempJobLat, Pay: Float(tempJobPay)!, Description: tempJobDescription, DueDate: tempJobDueDateFromApexTime!, PostDate: tempJobDate)
+                        self.listOfJobs.append(jobListing)
+                    }
+                    self.tableView.reloadData()
+                }
+                
+                
+            }
+            catch {
+                print ("Error trying to convert data to json")
+                return
+            }
+            
+        })
+        task.resume()
+        
+    }
+    
     //sets the delete button to show done while editing is in progress and go back to delete when finished editing.
     override func setEditing (_ editing:Bool, animated:Bool)
     {
