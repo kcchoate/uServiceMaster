@@ -4,10 +4,6 @@
 //
 import UIKit
 
-protocol NewJobDelegate {
-    func addJobButtonPressed (aNewJob: NewJob)
-}
-
 class NewJob {
     var owner: String
     var title: String
@@ -50,7 +46,6 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     @IBOutlet weak var jobDetailsTextField: UITextView!
     @IBOutlet weak var bottomAddJobButton: UIButton!
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
-    var delegate: NewJobDelegate? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,8 +83,6 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
     
     
     @IBAction func addNewJobButtonPressed(_ sender: AnyObject) {
-        //We only perform any actions assuming the delegate for this classes protocol has been set. Assuming it as, we call the delegate method when the button is pressed. We then pop the view to go back to the previous screen
-        if delegate != nil {
             let jobTitle = jobTitleTextField.text!
             let jobDetails = jobDetailsTextField.text!
             // The next lines format the price field
@@ -97,6 +90,8 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             let strippedPriceIndex = priceField.index(after: priceField.startIndex)
             let jobPriceWithCommas = priceField.substring(from: strippedPriceIndex)
             let jobPrice = Float(jobPriceWithCommas.replacingOccurrences(of: ",", with: ""))!
+            let jobLat = loggedInUser?.lat!
+            let jobLong = loggedInUser?.long!
             // The next lines format the date field
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US")
@@ -107,7 +102,6 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
             //TODO: - Send usersNewJob to server
             
             _ = navigationController?.popViewController(animated: true) // Swift 3 has changed behavior and any function that returns something that can be discarded now gives a warning when doing so. By assigning the result to _ we can get rid of the stupid warning.
-        }
     }
     //The next two functions configure the JobDateTextField to open a UIDatePicker and update the text as the UIDatePicker updates
     @IBAction func JobDateTextFieldSelected(_ textField: UITextField) {
