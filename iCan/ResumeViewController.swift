@@ -40,16 +40,13 @@ class ResumeViewController: UIViewController {
             do {
                 var tempResume: String? = "User has no resume."
                 let data = try JSONSerialization.jsonObject(with: responseData, options: []) as! [String:Any]
-                let parsedData = data["data"] as! NSArray
+                let parsedData = data["data"] as! NSDictionary
                 DispatchQueue.main.async {
-                    for applicant in parsedData {
-                        let tempApplicant = applicant as! [String:Any]
-                        let attributes = tempApplicant["attributes"] as! [String:Any]
-                        let properties = attributes["properties"] as! [String:Any]
-                        tempResume = properties["resume"] as? String
-                        if tempResume == nil {
-                            tempResume = "User has no resume."
-                        }
+                    let attributes = parsedData["attributes"] as! [String:Any]
+                    let properties = attributes["properties"] as! [String:Any]
+                    tempResume = properties["resume"] as? String
+                    if tempResume == nil {
+                        tempResume = "User has no resume."
                     }
                     self.resumeTextView.text = tempResume
                 }

@@ -125,11 +125,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.loggedInUser.lastName = properties["lastname"] as? String
                     self.loggedInUser.lat = attributes["latitude"] as? Double
                     self.loggedInUser.long = attributes["longitude"] as? Double
-                    self.loggedInUser.password = attributes["password"] as! String
+                    self.loggedInUser.password = attributes["password"] as? String
                     var userResume = "none"
                     if properties["resume"] != nil{
                         userResume = properties["resume"] as! String
                     }
+                    self.loggedInUser.resume = userResume
                     self.performSegue(withIdentifier: "LoginSuccess", sender: self)
                 }
             }

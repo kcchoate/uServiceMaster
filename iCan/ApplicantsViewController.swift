@@ -52,6 +52,10 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
         jobPayLabel.text! = "Job cost: \(numberFormatter.string(from: NSNumber(value: selectedJob!.pay))!)"
         updateApplicantList()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateApplicantList()
+    }
 
     func updateApplicantList() {
         let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!
@@ -79,12 +83,12 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
                 numberFormatter.locale = Locale(identifier: "en-US")
                 numberFormatter.numberStyle = .currency
                 DispatchQueue.main.async {
+                    self.listOfApplicants = []
                     for application in parsedData {
                         let tempApplication = application as! [String:Any]
                         let attributes = tempApplication["attributes"] as! [String:Any]
                         let applicantID = attributes["applicant"] as! String
                         let jobID = attributes["jid"] as! String
-                        //TODO: have resumes added to applicant list.
                         if (jobID == self.selectedJob?.jid)
                         {
                             let applicant = Applicant(aid: applicantID, applicantResume: "test resume")

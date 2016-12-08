@@ -51,16 +51,12 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     @IBAction func newLocationSwitchOn() {
         if (newLocationSwitch.isOn) {
             locationUpdated = true
-            LoadingOverlay.shared.showOverlay(view: self.view)
             locationManager.requestLocation()
-            LoadingOverlay.shared.hideOverlayView()
             let numberFormatter = NumberFormatter()
             numberFormatter.minimumFractionDigits = 1
             numberFormatter.maximumFractionDigits = 1
             numberFormatter.minimumIntegerDigits = 2
             numberFormatter.maximumIntegerDigits = 2
-            updatedLatitude = newLocationLatitude
-            updatedLongitude = newLocationLongitude
             
             if (newPasswordTextField.text! != confirmPasswordTextField.text!) {
                 updateButton.isEnabled = false
@@ -92,8 +88,8 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
             newPassword = (self.loggedInUser?.password)!
         }
         if (locationUpdated) {
-            newLong = updatedLongitude
-            newLat = updatedLatitude
+            newLong = self.newLocationLongitude
+            newLat = self.newLocationLatitude
         }
         else {
             newLong = (self.loggedInUser?.long)!
@@ -153,7 +149,7 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
         })
         task.resume()
         OperationQueue.main.addOperation {
-            self.presentErrorNotification(errorTitle: "Profile updated", errorMessage: "You have sucessfully updated your profile.")
+            self.presentErrorNotification(errorTitle: "Your account has been updated.", errorMessage: "Please log in again to verify your information.")
         }
         
     }
@@ -161,7 +157,9 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     //a utility function for presenting an error notification to the user
     func presentErrorNotification(errorTitle: String, errorMessage: String) {
         let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (alert: UIAlertAction!)  in
+            self.performSegue(withIdentifier: "accountUpdated", sender: self)
+        }))
         present(ac, animated: true)
     }
 
@@ -285,6 +283,7 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
         let location = locations[0]
         self.newLocationLatitude = location.coordinate.latitude
         self.newLocationLongitude = location.coordinate.longitude
+        print ("new lat: \(self.newLocationLatitude)")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -301,40 +300,4 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
         }
     }
 
-}
-
-public class LoadingOverlay{
-    
-    var overlayView = UIView()
-    var activityIndicator = UIActivityIndicatorView()
-    
-    class var shared: LoadingOverlay {
-        struct Static {
-            static let instance: LoadingOverlay = LoadingOverlay()
-        }
-        return Static.instance
-    }
-    
-    public func showOverlay(view: UIView) {
-        
-        overlayView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        overlayView.center = view.center
-        overlayView.backgroundColor = UIColor(red: 68, green: 68, blue: 68, alpha: 0.7)
-        overlayView.clipsToBounds = true
-        overlayView.layer.cornerRadius = 10
-        
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        activityIndicator.activityIndicatorViewStyle = .whiteLarge
-        activityIndicator.center = CGPoint(x: overlayView.bounds.width / 2, y: overlayView.bounds.height / 2)
-        
-        overlayView.addSubview(activityIndicator)
-        view.addSubview(overlayView)
-        
-        activityIndicator.startAnimating()
-    }
-    
-    public func hideOverlayView() {
-        activityIndicator.stopAnimating()
-        overlayView.removeFromSuperview()
-    }
 }

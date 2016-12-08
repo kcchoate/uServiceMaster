@@ -12,7 +12,7 @@ class PostedJobsTableViewController: UITableViewController {
     var loggedInUser: LoggedInUser? = nil
     var listOfJobs: [Job] = []
     var selectedCell: Int = 0
-    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs"
+    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/jobs?"
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class PostedJobsTableViewController: UITableViewController {
     
     
     func updateJobList() {
-        let requestURL: URL = URL(string: "\(amazonKey)")!
+        let requestURL: URL = URL(string: "\(amazonKey)longitude=\((self.loggedInUser?.long)!)&latitude=\(self.loggedInUser?.lat)!")!
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
