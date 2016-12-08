@@ -17,7 +17,9 @@ class JobApplicationViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var detailsTextView: UITextView!
     @IBOutlet weak var jobLocationMapView: MKMapView!
     var selectedJob: Job? = nil
+    var loggedInUser: LoggedInUser? = nil
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
+    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/applications"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +55,55 @@ class JobApplicationViewController: UIViewController, MKMapViewDelegate {
     
     
     @IBAction func applyForJobPressed() {
-        //TODO: - Send application to job to server 
+        let newApplication = [
+            "data": [
+                "type": "applications",
+                "attributes": [
+                    "jid": (self.selectedJob?.jid)!,
+                    "applicant": (self.loggedInUser?.uid)!,
+                    "owner": (self.selectedJob?.owner)!
+                ]
+            ]
+        ] as [String: Any]
+        let jsonData = try! JSONSerialization.data(withJSONObject: newApplication, options: [.prettyPrinted])
+        let requestURL: URL = URL(string: amazonKey)!
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+            if error != nil {
+                OperationQueue.main.addOperation {
+                    self.presentErrorNotification(errorTitle: "Application not submitted.", errorMessage: (error?.localizedDescription)!)
+                }
+            } else {
+                do {
+                    guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
+                    
+                    guard let errors = json?["errors"] as? [[String: Any]] else { return }
+                    if errors.count > 0 {
+                        OperationQueue.main.addOperation {
+                            self.presentErrorNotification(errorTitle: "Application not submitted.", errorMessage: "Your job was not sent due to a network error.")
+                        }
+                        return
+                    } else {
+                        
+                    }
+                }
+            }
+        })
+        task.resume()
+        OperationQueue.main.addOperation {
+            self.presentErrorNotification(errorTitle: "Successfully submitted application.", errorMessage: "Your application has been submitted.")
+        }
+    }
+    
+    //a utility function for presenting an error notification to the user
+    func presentErrorNotification(errorTitle: String, errorMessage: String) {
+        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

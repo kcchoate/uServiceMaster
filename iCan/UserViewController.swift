@@ -5,7 +5,7 @@
 
 import UIKit
 import CoreLocation
-class UserViewController: UIViewController {
+class UserViewController: UIViewController, SendLoggedInUserBack {
     var loggedInUser: LoggedInUser? = nil
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
@@ -15,8 +15,7 @@ class UserViewController: UIViewController {
     var userState = "..."
     override func viewDidLoad() {
         super.viewDidLoad()
-        //TODO: - SWITCH LAT AND LONG BACK. SWITCHED THEM AS TEST DATA HAD IT SWITCHED
-        let userLocation = CLLocation(latitude: (loggedInUser?.long)!, longitude: (loggedInUser?.lat)!)
+        let userLocation = CLLocation(latitude: (loggedInUser?.lat)!, longitude: (loggedInUser?.long)!)
         DispatchQueue.main.async {
             self.geocoder.reverseGeocodeLocation(userLocation, completionHandler: { (placemarks, error) -> Void in
                 let placemark = placemarks?[0]
@@ -36,6 +35,9 @@ class UserViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func loggedInUserSentBack(sender: ModifyAccountViewController) {
+        self.loggedInUser = sender.loggedInUser
+    }
 
     // MARK: - Navigation
 
@@ -55,6 +57,11 @@ class UserViewController: UIViewController {
         if segue.identifier == "viewMyApplications" {
             let secondVC = segue.destination as! MyApplicationsTableViewController
             secondVC.loggedInUser = self.loggedInUser
+        }
+        if segue.identifier == "userSettingsSegue" {
+            let secondVC = segue.destination as! ModifyAccountViewController
+            secondVC.loggedInUser = self.loggedInUser
+            secondVC.sendLoggedInUserBackDelegate = self
         }
     }
     

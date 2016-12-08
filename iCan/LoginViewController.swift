@@ -10,16 +10,20 @@ class LoggedInUser {
     var firstName: String? = "First"
     var lastName: String? = "Last"
     var email: String? = "example@example.com"
+    var password: String? = "Test"
+    var resume: String? = "Test"
     var lat: Double? = 47.6
     var long: Double? = -122.3
     
-    init(UID: String, FirstName: String, LastName: String, Email: String, Lat: Double, Long: Double) {
+    init(UID: String, FirstName: String, LastName: String, Password: String, Email: String, Lat: Double, Long: Double, Resume: String) {
         uid = UID
         firstName = FirstName
         lastName = LastName
         email = Email
         lat = Lat
         long = Long
+        password = Password
+        resume = Resume
     }
     init() {
         //default constructor used for testing
@@ -95,9 +99,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func testLogin(userName: String, password: String) {
-        //TODO: - Uncomment the next line once ready to enable actual log in functionality (leaving hardcoded for further testing)
-        // correct url: let requestURL: URL = URL(string: amazonKey + "users?uid=" + userName + "&password=" + password)!
-        let requestURL: URL = URL(string: "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/users?uid=ireMURxJ&password=password")!
+        let requestURL: URL = URL(string: amazonKey + "users?uid=" + userName + "&password=" + password)!
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
@@ -121,8 +123,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.loggedInUser.uid = properties["email"] as? String
                     self.loggedInUser.firstName = properties["firstname"] as? String
                     self.loggedInUser.lastName = properties["lastname"] as? String
-                    self.loggedInUser.lat = attributes["longitude"] as? Double
-                    self.loggedInUser.long = attributes["latitude"] as? Double
+                    self.loggedInUser.lat = attributes["latitude"] as? Double
+                    self.loggedInUser.long = attributes["longitude"] as? Double
+                    self.loggedInUser.password = attributes["password"] as! String
+                    var userResume = "none"
+                    if properties["resume"] != nil{
+                        userResume = properties["resume"] as! String
+                    }
                     self.performSegue(withIdentifier: "LoginSuccess", sender: self)
                 }
             }
@@ -196,9 +203,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let thirdNavController = destinationVC.viewControllers?[2] as! LoggedInNavigationController
             let findJobViewController = thirdNavController.viewControllers[0] as! PostedJobsTableViewController
             findJobViewController.loggedInUser = self.loggedInUser
-            
-            
-            
         }
     }
 /* 

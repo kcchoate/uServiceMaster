@@ -108,15 +108,12 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
                     "type": "jobs",
                     "attributes": [
                         "owner": usersNewJob.owner,
-                        "completed": false,
-                        "properties":
-                        [
-                            "description": usersNewJob.description,
-                            "title":usersNewJob.title,
-                            "dueDate": usersNewJob.dueDate
-                        ],
-                        "pay": String(usersNewJob.pay),
-                        "assignedTo": "null"
+                        "latitude": usersNewJob.latitude,
+                        "longitude": usersNewJob.longitude,
+                        "description": usersNewJob.description,
+                        "title":usersNewJob.title,
+                        "dueDate": usersNewJob.dueDate,
+                        "pay": String(usersNewJob.pay)
                     ]
                 ]
             
@@ -128,10 +125,11 @@ class NewJobViewController: UIViewController, UITextFieldDelegate, UITextViewDel
         request.httpBody = jsonData
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         let session = URLSession.shared
-        print ("pre-task")
         let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
             if error != nil {
-                print("task error: " + (error?.localizedDescription)!)
+                OperationQueue.main.addOperation {
+                    self.presentErrorNotification(errorTitle: "Job not created", errorMessage: (error?.localizedDescription)!)
+                }
             } else {
                 do {
                     guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }

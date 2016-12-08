@@ -8,9 +8,10 @@
 
 import UIKit
 import CoreLocation
-import CoreGraphics
 
-
+protocol SendLoggedInUserBack {
+    func loggedInUserSentBack(sender: ModifyAccountViewController)
+}
 class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var newPasswordTextField: UITextField!
@@ -18,7 +19,7 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     @IBOutlet weak var resumeTextView: UITextView!
     @IBOutlet weak var updateButton: UIButton!
     @IBOutlet weak var newLocationSwitch: UISwitch!
-    
+    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/users/"
     var loggedInUser: LoggedInUser? = nil
     var backgroundGrey: UIColor? = nil
     let locationManager = CLLocationManager()
@@ -27,7 +28,7 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
     var updatedLongitude: Double = 0
     var updatedLatitude: Double = 0
     var locationUpdated: Bool = false
-    
+    var sendLoggedInUserBackDelegate: SendLoggedInUserBack? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,32 +88,86 @@ class ModifyAccountViewController: UIViewController, UITextFieldDelegate, UIText
         if (newPasswordTextField.text! == confirmPasswordTextField.text! && newPasswordTextField.text!.characters.count > 0) {
             newPassword = newPasswordTextField.text!
         }
+        else {
+            newPassword = (self.loggedInUser?.password)!
+        }
         if (locationUpdated) {
             newLong = updatedLongitude
             newLat = updatedLatitude
         }
+        else {
+            newLong = (self.loggedInUser?.long)!
+            newLat = (self.loggedInUser?.lat)!
+        }
         if (resumeTextView.text!.characters.count > 0) {
             newResume = resumeTextView.text!
         }
-        //TODO: - Send updated information 
+        else {
+            newResume = (self.loggedInUser?.resume)!
+        }
+        self.loggedInUser?.password = newPassword
+        self.loggedInUser?.lat = newLat
+        self.loggedInUser?.long = newLong
+        self.loggedInUser?.resume = newResume
+        let newJob = [
+            
+            "data": [
+                "type": "users",
+                "uid": (self.loggedInUser?.uid)!,
+                "attributes": [
+                    "password": newPassword!,
+                    "resume": newResume!,
+                    "latitude": newLat!,
+                    "longitude": newLong!
+                ]
+            ]
+        ] as [String: Any]
+        
+        let jsonData = try! JSONSerialization.data(withJSONObject: newJob, options: [.prettyPrinted])
+        let requestURL: URL = URL(string: amazonKey + (self.loggedInUser?.uid)!)!
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "PATCH"
+        request.httpBody = jsonData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+            if error != nil {
+                OperationQueue.main.addOperation {
+                    self.presentErrorNotification(errorTitle: "Your profile failed to update", errorMessage: (error?.localizedDescription)!)
+                }
+            } else {
+                do {
+                    guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
+                    
+                    guard let errors = json?["errors"] as? [[String: Any]] else { return }
+                    if errors.count > 0 {
+                        OperationQueue.main.addOperation {
+                            self.presentErrorNotification(errorTitle: "Your profile failed to update", errorMessage: "Applicant accept failed due to a network error.")
+                        }
+                        return
+                    } else {
+                        
+                    }
+                }
+            }
+        })
+        task.resume()
+        OperationQueue.main.addOperation {
+            self.presentErrorNotification(errorTitle: "Profile updated", errorMessage: "You have sucessfully updated your profile.")
+        }
+        
     }
-    @IBAction func backButtonPressed() {
-        _ = self.navigationController?.popViewController(animated: true)
-    }
-    
-    
-    
     
     //a utility function for presenting an error notification to the user
     func presentErrorNotification(errorTitle: String, errorMessage: String) {
         let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (alert: UIAlertAction!)  in
-            _ = self.navigationController?.popViewController(animated: true)
-        }))
-        
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
-    
+
+    @IBAction func backButtonPressed() {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
     
     // MARK: - UITextFieldDelegate
     

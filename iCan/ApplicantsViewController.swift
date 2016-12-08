@@ -54,9 +54,7 @@ class ApplicantsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func updateApplicantList() {
-        //TODO: Uncomment next line once UIDs have been updated from base64 to email addresses
-        //let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!
-        let requestURL: URL = URL(string: "\(amazonKey)ireMURxJ")!
+        let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in

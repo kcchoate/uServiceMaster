@@ -14,6 +14,7 @@ class MyApplicationsTableViewController: UITableViewController {
     var listOfJobs: [Job] = []
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/applications?applicant="
+    let amazonKeyDelete = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/applications/"
     override func viewDidLoad() {
         self.tableView.separatorStyle = .singleLine
         self.tableView.separatorColor = colorDarkGreen
@@ -24,9 +25,7 @@ class MyApplicationsTableViewController: UITableViewController {
     }
     
     func updateJobList() {
-        //TODO: Uncomment next line once UIDs have been updated from base64 to email addresses
-        //let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!\
-        let requestURL: URL = URL(string: "\(amazonKey)amjAc8OK")!
+        let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
@@ -60,6 +59,7 @@ class MyApplicationsTableViewController: UITableViewController {
                         let tempJobLong = attributes["longitude"] as! Double
                         let tempJobLat = attributes["latitude"] as! Double
                         let tempJobPay = attributes["pay"] as! String
+                        let tempJobOwner = attributes["owner"] as! String
                         var tempJobTitle = properties["title"] as? String
                         if tempJobTitle == nil {
                             tempJobTitle = ""
@@ -73,7 +73,7 @@ class MyApplicationsTableViewController: UITableViewController {
                             tempJobDueDate = "12/25/2016"
                         }
                         let tempJobDueDateFromApexTime = dateFormatter.date(from: tempJobDueDate!)?.timeIntervalSince1970
-                        let jobListing = Job(JID: tempJobJID, Title: tempJobTitle!, Longitude: tempJobLong, Latitude: tempJobLat, Pay: Float(tempJobPay)!, Description: tempJobDescription!, DueDate: tempJobDueDateFromApexTime!, PostDate: tempJobDate)
+                        let jobListing = Job(Owner: tempJobOwner, JID: tempJobJID, Title: tempJobTitle!, Longitude: tempJobLong, Latitude: tempJobLat, Pay: Float(tempJobPay)!, Description: tempJobDescription!, DueDate: tempJobDueDateFromApexTime!, PostDate: tempJobDate)
                         self.listOfJobs.append(jobListing)
                     }
                     self.tableView.reloadData()
@@ -124,6 +124,12 @@ class MyApplicationsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = Locale(identifier: "en-US")
+        let pay = listOfJobs[indexPath.row].pay
+        let payString = numberFormatter.string(from: NSNumber(value: pay))!
+        cell.textLabel?.text = "\(listOfJobs[indexPath.row].title) - \(payString)"
         cell.textLabel?.text = "\(listOfJobs[indexPath.row].title) - $\(listOfJobs[indexPath.row].pay)"
         
         return cell
@@ -144,17 +150,54 @@ class MyApplicationsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            let requestURL: URL = URL(string: amazonKeyDelete + self.listOfJobs[indexPath.row].jid + "~" + (self.loggedInUser?.uid)!)!
             listOfJobs.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            // TODO: - send request to server to delete application
-            
-        } else if editingStyle == .insert {
+            var request = URLRequest(url: requestURL)
+            request.httpMethod = "DELETE"
+            request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            let session = URLSession.shared
+            let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+                if error != nil {
+                    OperationQueue.main.addOperation {
+                        self.presentErrorNotification(errorTitle: "Application not deleted.", errorMessage: (error?.localizedDescription)!)
+                    }
+                } else {
+                    do {
+                        guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
+                        
+                        guard let errors = json?["errors"] as? [[String: Any]] else { return }
+                        if errors.count > 0 {
+                            OperationQueue.main.addOperation {
+                                self.presentErrorNotification(errorTitle: "Application not deleted.", errorMessage: "Your application was not deleted due to a network error.")
+                            }
+                            return
+                        } else {
+                            
+                        }
+                    }
+                }
+            })
+            task.resume()
+            OperationQueue.main.addOperation {
+                self.presentErrorNotification(errorTitle: "Successfully deleted application.", errorMessage: "Your application has been deleted.")
+            }
+        }
+    
+        else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    
+
+    //a utility function for presenting an error notification to the user
+    func presentErrorNotification(errorTitle: String, errorMessage: String) {
+        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+
      // MARK: - Navigation
-     
+
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "viewSelectedApplication") {

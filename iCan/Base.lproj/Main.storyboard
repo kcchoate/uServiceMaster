@@ -1071,7 +1071,7 @@
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aQ0-xb-4n9" userLabel="Details Text View">
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -1118,7 +1118,7 @@
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resume:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrf-pU-giy">
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
@@ -1168,6 +1168,7 @@
                         <outlet property="passwordTextField" destination="URS-DW-mhc" id="SfN-SF-vpO"/>
                         <outlet property="passwordVerificationTextField" destination="vA8-yu-Zdj" id="Ez5-Ok-1on"/>
                         <outlet property="resumeTextView" destination="aQ0-xb-4n9" id="oes-ZL-Kby"/>
+                        <segue destination="6j9-um-e8l" kind="showDetail" identifier="accountCreatedSignedIn" id="oe3-Jh-znb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gsu-du-f9D" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1181,4 +1182,7 @@
         <image name="Search Property-30.png" width="30" height="30"/>
         <image name="Settings-30.png" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="oe3-Jh-znb"/>
+    </inferredMetricsTieBreakers>
 </document>

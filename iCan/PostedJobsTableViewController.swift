@@ -16,12 +16,15 @@ class PostedJobsTableViewController: UITableViewController {
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        listOfJobs = []
         updateJobList()
     }
     
+    
     func updateJobList() {
-        //TODO: Uncomment next line once UIDs have been updated from base64 to email addresses
-        //let requestURL: URL = URL(string: amazonKey + (loggedInUser?.uid)!)!\
         let requestURL: URL = URL(string: "\(amazonKey)")!
         let urlRequest: URLRequest = URLRequest(url: requestURL)
         let session = URLSession.shared
@@ -29,7 +32,6 @@ class PostedJobsTableViewController: UITableViewController {
             //do stuff with response, data, and error here
             guard error == nil else {
                 print ("error calling GET")
-                print (error)
                 return
             }
             guard let responseData = data else {
@@ -55,6 +57,7 @@ class PostedJobsTableViewController: UITableViewController {
                         let tempJobLong = attributes["longitude"] as! Double
                         let tempJobLat = attributes["latitude"] as! Double
                         let tempJobPay = attributes["pay"] as! String
+                        let tempJobOwner = attributes["owner"] as! String
                         var tempJobTitle = properties["title"] as? String
                         if tempJobTitle == nil {
                             tempJobTitle = ""
@@ -68,8 +71,11 @@ class PostedJobsTableViewController: UITableViewController {
                             tempJobDueDate = "12/25/2016"
                         }
                         let tempJobDueDateFromApexTime = dateFormatter.date(from: tempJobDueDate!)?.timeIntervalSince1970
-                        let jobListing = Job(JID: tempJobJID, Title: tempJobTitle!, Longitude: tempJobLong, Latitude: tempJobLat, Pay: Float(tempJobPay)!, Description: tempJobDescription!, DueDate: tempJobDueDateFromApexTime!, PostDate: tempJobDate)
-                        self.listOfJobs.append(jobListing)
+                        //filter out the logged in users jobs to not appear in the list of available jobs in the area
+                        if tempJobOwner != self.loggedInUser?.uid {
+                            let jobListing = Job(Owner: tempJobOwner, JID: tempJobJID, Title: tempJobTitle!, Longitude: tempJobLong, Latitude: tempJobLat, Pay: Float(tempJobPay)!, Description: tempJobDescription!, DueDate: tempJobDueDateFromApexTime!, PostDate: tempJobDate)
+                            self.listOfJobs.append(jobListing)
+                        }
                     }
                     self.tableView.reloadData()
                 }
@@ -105,7 +111,12 @@ class PostedJobsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         
-        cell.textLabel?.text = "\(listOfJobs[indexPath.row].title) - $\(listOfJobs[indexPath.row].pay)"
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        numberFormatter.locale = Locale(identifier: "en-US")
+        let pay = listOfJobs[indexPath.row].pay
+        let payString = numberFormatter.string(from: NSNumber(value: pay))!
+        cell.textLabel?.text = "\(listOfJobs[indexPath.row].title) - \(payString)"
         
         return cell
     }
@@ -121,7 +132,7 @@ class PostedJobsTableViewController: UITableViewController {
             let destinationVC = segue.destination as! JobApplicationViewController
             destinationVC.selectedJob = listOfJobs[selectedCell]
             destinationVC.title = listOfJobs[selectedCell].title
-            
+            destinationVC.loggedInUser = self.loggedInUser
             let backItem = UIBarButtonItem()
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem

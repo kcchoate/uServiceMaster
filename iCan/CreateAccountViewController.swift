@@ -18,12 +18,14 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var resumeTextView: UITextView!
     @IBOutlet weak var createButton: UIButton!
+    var loggedInUser: LoggedInUser? = nil
+    
     let colorDarkGreen = UIColor(colorLiteralRed: 62/255, green: 137/255, blue: 20/255, alpha: 1)
     var backgroundGrey: UIColor? = nil
     let locationManager = CLLocationManager()
     var locationLongitude: CLLocationDegrees = 0
     var locationLatitude: CLLocationDegrees = 0
-    
+    let amazonKey = "https://0944tu0fdb.execute-api.us-west-2.amazonaws.com/prod/users"
     override func viewDidLoad() {
         backgroundGrey = passwordTextField.backgroundColor
         super.viewDidLoad()
@@ -173,8 +175,76 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         // Dispose of any resources that can be recreated.
     }
     @IBAction func createButtonPressed() {
-        //locationLongitude, locationLatitude
         //TODO: - Send new user to server
+        let userEmail = emailTextField.text!
+        let userPassword = passwordTextField.text!
+        let userFirstName = firstNameTextField.text!
+        let userLastName = lastNameTextField.text!
+        let userResume = resumeTextView.text!
+        let numberFormatter = NumberFormatter()
+        numberFormatter.maximumIntegerDigits = 3
+        numberFormatter.maximumFractionDigits = 1
+        let userLong = Double(numberFormatter.number(from: "\(locationLongitude)")!)
+        let userLat = Double(numberFormatter.number(from: "\(locationLatitude)")!)
+        
+        
+        let newUser = [
+            
+            "data": [
+                "type": "users",
+                "uid": userEmail,
+                "attributes": [
+                    "password": userPassword,
+                    "firstname": userFirstName,
+                    "lastname": userLastName,
+                    "email": userEmail,
+                    "address": "no address",
+                    "city": "no city",
+                    "state": "no state",
+                    "zipcode": "no zipcode",
+                    "latitude": userLat,
+                    "longitude": userLong,
+                    "resume": userResume
+                ]
+            ]
+            
+        ] as [String: Any]
+        
+        let jsonData = try! JSONSerialization.data(withJSONObject: newUser, options: [.prettyPrinted])
+        let requestURL: URL = URL(string: amazonKey)!
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { (data, response, error) in
+            if error != nil {
+                OperationQueue.main.addOperation {
+                    self.presentErrorNotification(errorTitle: "User not created", errorMessage: (error?.localizedDescription)!)
+                }
+            } else {
+                do {
+                    guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
+                    
+                    guard let errors = json?["errors"] as? [[String: Any]] else { return }
+                    if errors.count > 0 {
+                        OperationQueue.main.addOperation {
+                            self.presentErrorNotification(errorTitle: "User not created", errorMessage: "Your user was not created due to a network error.")
+                        }
+                        return
+                    } else {
+                        
+                    }
+                }
+            }
+        })
+        task.resume()
+        OperationQueue.main.addOperation {
+            self.loggedInUser = LoggedInUser(UID: userEmail, FirstName: userFirstName, LastName: userLastName, Password: userPassword, Email: userEmail, Lat: userLat, Long: userLong, Resume: userResume)
+            self.performSegue(withIdentifier: "accountCreatedSignedIn", sender: nil)
+        }
+
+        
     }
     
     
@@ -332,14 +402,23 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate, UIText
         presentErrorNotification(errorTitle: "Error in retrieving location.", errorMessage: error.localizedDescription)
     }
     
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+        if segue.identifier == "accountCreatedSignedIn" {
+            let destinationVC = segue.destination as! TabBarController
+            destinationVC.loggedInUser = self.loggedInUser
+            let firstNavController = destinationVC.viewControllers?[0] as! LoggedInNavigationController
+            let userViewController = firstNavController.viewControllers[0] as! UserViewController
+            userViewController.loggedInUser = self.loggedInUser
+            let secondNavController = destinationVC.viewControllers?[1] as! LoggedInNavigationController
+            let newJobViewController = secondNavController.viewControllers[0] as! NewJobViewController
+            newJobViewController.loggedInUser = self.loggedInUser
+            let thirdNavController = destinationVC.viewControllers?[2] as! LoggedInNavigationController
+            let findJobViewController = thirdNavController.viewControllers[0] as! PostedJobsTableViewController
+            findJobViewController.loggedInUser = self.loggedInUser
+        }
      }
-     */
     
 }
